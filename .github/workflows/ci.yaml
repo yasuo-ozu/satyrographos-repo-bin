@@ -1,0 +1,77 @@
+name: Push on develop
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    name: Build
+    runs-on: 'ubuntu-latest'
+    env:
+      OPAMSOLVERTIMEOUT: 3600
+      OPAMVERBOSE: 1
+      SNAPSHOT: "snapshot-${{ matrix.snapshot }}"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: develop
+          fetch-depth: 1
+          path: develop
+          submodules: true
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          fetch-depth: 1
+          path: main
+
+      - name: Determine the default OPAM Repo
+        id: determine-default-opam-repo
+        # See https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#runner-context
+        # and https://github.com/ocaml/setup-ocaml/blob/4ac56b0fd440c3eef30fd1e34c96e0c740a807da/src/constants.ts#L45
+        run: |
+          if [ "${{ runner.os }}" = "Windows" ] ; then
+            DEFAULT_OPAM_REPO="https://github.com/fdopen/opam-repository-mingw.git#opam2"
+          else
+            DEFAULT_OPAM_REPO="https://github.com/ocaml/opam-repository.git"
+          fi
+          echo "::set-output name=opam-repo-default::$(echo "$DEFAULT_OPAM_REPO")"
+
+      - name: Setup OCaml
+        uses: ocaml/setup-ocaml@v2
+        with:
+          ocaml-compiler: ""
+          opam-repositories: |
+            satysfi-external: https://github.com/gfngfn/satysfi-external-repo.git
+            satyrographos-local: git+file://${{ github.workspace }}/develop/repos/satyrographos-repo
+            default: ${{ steps.determine-default-opam-repo.outputs.opam-repo-default }}
+
+      - name: Install opam-bin
+        run: |
+          eval $(opam env)
+          opam install -y opam-bin
+          opam-bin install
+          opam-bin config --base-url "https://raw.githubusercontent.com/${{ github.repository }}/main/store"
+
+      - name: Run script
+        run: |
+          mkdir -p "${{ github.workspace }}/main/build-log"
+          ./develop/update.sh "${{ github.workspace }}/main" "${{ github.workspace }}/main/store"
+        env:
+          OPAMLOGS: "${{ github.workspace }}/main/build-log"
+
+      - name: Add files
+        run: |
+          cd main && git add store packages build-log
+
+      - name: Commit & Push changes
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN  }}
+          directory: "main"
+
+
