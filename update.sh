@@ -16,5 +16,5 @@ PACKAGES=(satysfi satyrographos)
 eval $(opam env) && opam-bin config --base-url "https://raw.githubusercontent.com/yasuo-ozu/satyrographos-repo-bin/main"
 
 for PACKAGE in "${PACKAGES[@]}"; do
-	find "$SRC_DIR/packages/$PACKAGE" -maxdepth 1 -mindepth 1 -type d | xargs -I{} sh -c "opam install {} -v -y && opam remove -a -y {}"
+	find "$SRC_DIR/packages/$PACKAGE" -maxdepth 1 -mindepth 1 -type d | xargs -I{} sh -c "opam install {} -v -y && opam remove -a -y {} || true"
 done
