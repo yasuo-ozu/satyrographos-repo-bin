@@ -41,17 +41,13 @@ jobs:
           echo "::set-output name=opam-repo-default::$(echo "$DEFAULT_OPAM_REPO")"
 
       - name: Setup OCaml
-        uses: Wandalen/wretry.action@v1.0.11
+        uses: ocaml/setup-ocaml@v2
         with:
-          attempt_limit: 3
-          attempt_delay: 10000
-          action: ocaml/setup-ocaml@v2
-          with: |
-            ocaml-compiler: ""
-            opam-repositories: |
-              satysfi-external: https://github.com/gfngfn/satysfi-external-repo.git
-              satyrographos-local: git+file://${{ github.workspace }}/src
-              default: ${{ steps.determine-default-opam-repo.outputs.opam-repo-default }}
+          ocaml-compiler: ""
+          opam-repositories: |
+            satysfi-external: https://github.com/gfngfn/satysfi-external-repo.git
+            satyrographos-local: git+file://${{ github.workspace }}/src
+            default: ${{ steps.determine-default-opam-repo.outputs.opam-repo-default }}
 
       - name: Install opam-bin
         run: |
