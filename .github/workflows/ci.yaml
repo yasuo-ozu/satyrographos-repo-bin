@@ -62,7 +62,7 @@ jobs:
 
       - name: Add files
         run: |
-          cd src && git add store packages
+          cd main && git add store packages
 
       - name: Commit & Push changes
         uses: actions-js/push@master
