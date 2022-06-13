@@ -1,0 +1,9 @@
+
+opam-version: "2.0"
+name: "conf-pkg-config+bin"
+maintainer: "opam-bin"
+description: "This package is an alias for conf-pkg-config binary package"
+depends: [
+   "conf-pkg-config" {= "2+bin+553a48de+f2cc4984" }
+]
+

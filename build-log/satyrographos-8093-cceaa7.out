@@ -1,0 +1,15 @@
+         ppx bin/main.pp.ml (exit 1)
+(cd _build/default && .ppx/b4175a47579235f9b841d5d1f64bf609/ppx.exe -o bin/main.pp.ml --impl bin/main.ml -corrected-suffix .ppx-corrected -diff-cmd - -dump-ast)
+File "bin/main.ml", lines 92-93, characters 2-26:
+92 | ..Uri.of_string url
+93 |   |> Repository.add repo p
+Error: Jane Street style: Ignored expression must come with a type annotation
+fatal exception Failure("Command 'dune build -p satyrographos -j 2' exited with error code 1")
+Raised at Stdlib.failwith in file "stdlib.ml", line 29, characters 17-33
+Called from Cmdliner_term.app.(fun) in file "cmdliner_term.ml", line 24, characters 19-24
+Called from Cmdliner_eval.run_parser in file "cmdliner_eval.ml", line 34, characters 37-44
+Called from Cmdliner_eval.eval_value in file "cmdliner_eval.ml", line 202, characters 14-39
+Called from Cmdliner_eval.eval in file "cmdliner_eval.ml", line 252, characters 2-45
+Called from Ezcmd__V2.EZCMD.main_with_subcommands in file "src/ez_cmdliner/v2.ml", line 267, characters 15-161
+Called from Opam_bin_lib__Main.main in file "src/opam_bin_lib/main.ml", line 45, characters 6-191
+
