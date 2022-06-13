@@ -2,14 +2,16 @@
 
 This is binary version of [satyrographos-repo](https://github.com/na4zagin3/satyrographos-repo).
 
+Build status: [![Push on develop](https://github.com/yasuo-ozu/satyrographos-repo-bin/actions/workflows/ci.yaml/badge.svg?branch=develop)](https://github.com/yasuo-ozu/satyrographos-repo-bin/actions/workflows/ci.yaml)
+
 ## How to use
 
 Add this repository in your opam environment
 
 ```bash
 opam repository add satysfi-external https://github.com/gfngfn/satysfi-external-repo.git
-opam repository add satyrographos-repo https://github.com/yasuo-ozu/satyrographos-repo-bin.git
-opam repository add satyrographos-repo-bin https://github.com/na4zagin3/satyrographos-repo.git
+opam repository add satyrographos-repo-bin https://github.com/yasuo-ozu/satyrographos-repo-bin.git
+opam repository add satyrographos-repo https://github.com/na4zagin3/satyrographos-repo.git
 ```
 
 You may also want to use `--all-switches` option to enable this repo on all switches.
