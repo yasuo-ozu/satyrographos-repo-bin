@@ -16,5 +16,10 @@ PACKAGES=(satysfi satyrographos)
 eval $(opam env) && opam-bin config --base-url "https://raw.githubusercontent.com/yasuo-ozu/satyrographos-repo-bin/main"
 
 for PACKAGE in "${PACKAGES[@]}"; do
-	find "$SRC_DIR/packages/$PACKAGE" -maxdepth 1 -mindepth 1 -type d | xargs -I{} sh -c "opam install {} -v -y && opam remove -a -y {} || true"
+	find "$SRC_DIR/packages/$PACKAGE" -maxdepth 1 -mindepth 1 -type d | \
+	while read PKGDIR; do
+		cd "$PKGDIR"
+		echo "Installing $PKGDIR"
+		opam install . -v -y && opam remove -a -y || true
+	done
 done

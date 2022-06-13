@@ -44,7 +44,6 @@ jobs:
         uses: ocaml/setup-ocaml@v2
         with:
           ocaml-compiler: ""
-          cache-prefix: "v1-test"
           opam-repositories: |
             satysfi-external: https://github.com/gfngfn/satysfi-external-repo.git
             satyrographos-local: git+file://${{ github.workspace }}/src
@@ -59,11 +58,14 @@ jobs:
 
       - name: Run script
         run: |
+          mkdir -p "${{ github.workspace }}/main/log"
           ./main/update.sh "${{ github.workspace }}/src" "${{ github.workspace }}/main" "${{ github.workspace }}/main/store"
+        env:
+          OPAMLOGS: "${{ github.workspace }}/main/log"
 
       - name: Add files
         run: |
-          cd main && git add store packages
+          cd main && git add store packages log
 
       - name: Commit & Push changes
         uses: actions-js/push@master
