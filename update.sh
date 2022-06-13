@@ -14,7 +14,7 @@ PACKAGES="satysfi satyrographos"
 
 eval $(opam env) && opam-bin config --base-url "https://raw.githubusercontent.com/yasuo-ozu/satyrographos-repo-bin/main"
 
-opam list --columns=package -V $PACKAGES | sed -e '/^#/d' | \
+opam list --columns=package --installable --color=never --or -A -V $PACKAGES | sed -e '/^#/d' | \
 while read PKGNAME; do
 	echo "Installing $PKGNAME"
 	opam install "$PKGNAME" -v -y && opam remove -a -y "$PKGNAME" || true
