@@ -57,10 +57,18 @@ jobs:
           opam-bin install
           opam-bin config --base-url "https://raw.githubusercontent.com/${{ github.repository }}/main/store"
 
+      - name: Create switch
+        run: |
+          eval $(opam env)
+          opam switch create opam-bin --empty
+          opam switch opam-bin
+          opam repository add satysfi-external "https://github.com/gfngfn/satysfi-external-repo.git"
+          opam repository add satyrographos-local "git+file://${{ github.workspace }}/develop/repos/satyrographos-repo"
+          opam install -y ocaml-option-default-unsafe-string
+
       - name: Run script
         run: |
-          mkdir -p "${{ github.workspace }}/main/build-log"
-          ./develop/update.sh "${{ github.workspace }}/main" "${{ github.workspace }}/main/store"
+          ./develop/update.sh  "${{ github.workspace }}/main" "${{ github.workspace }}/main/store"
         env:
           OPAMLOGS: "${{ github.workspace }}/main/build-log"
 

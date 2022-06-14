@@ -12,10 +12,10 @@ ln -snf "$DEST_ARCHIVES_DIR" "$LOCAL_OPAM_BIN_STORE/archives"
 
 PACKAGES="satysfi satyrographos"
 
-eval $(opam env) && opam-bin config --base-url "https://raw.githubusercontent.com/yasuo-ozu/satyrographos-repo-bin/main"
+mkdir -p "$DEST_REPO_DIR/build-log"
 
-opam list --columns=package --installable --color=never --or -A -V $PACKAGES | sed -e '/^#/d' | \
+eval $(opam env) && opam list --columns=package --installable --color=never --or -A -V $PACKAGES | sed -e '/^#/d' | \
 while read PKGNAME; do
 	echo "Installing $PKGNAME"
-	opam install "$PKGNAME" -v -y && opam remove -a -y "$PKGNAME" || true
+	eval $(opam env) && opam install "$PKGNAME" -v -y && opam remove -a -y "$PKGNAME" || true
 done
