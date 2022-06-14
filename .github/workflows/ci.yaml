@@ -62,7 +62,7 @@ jobs:
           eval $(opam env)
           opam switch create opam-bin --empty
           opam switch opam-bin
-          opam switch set-invariant ocamlfind.1.8.1
+          [ "$((opam --version; echo "2.1") | sort -V | head -n 1)" = "2.1" ] &&  opam switch set-invariant ocamlfind.1.8.1
           opam repository add satysfi-external "https://github.com/gfngfn/satysfi-external-repo.git"
           opam repository add satyrographos-local "git+file://${{ github.workspace }}/develop/repos/satyrographos-repo"
 
