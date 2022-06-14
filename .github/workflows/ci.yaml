@@ -65,6 +65,8 @@ jobs:
           OPAMCLI=2.1 opam switch set-invariant ocamlfind.1.8.1
           opam repository add satysfi-external "https://github.com/gfngfn/satysfi-external-repo.git"
           opam repository add satyrographos-local "git+file://${{ github.workspace }}/develop/repos/satyrographos-repo"
+          opam remove -y base-unix base-threads base-bigarray
+          opam install -y base-unix base-threads base-bigarray
 
       - name: Run script
         run: |
