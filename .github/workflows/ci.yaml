@@ -64,6 +64,7 @@ jobs:
           opam switch opam-bin
           opam repository add satysfi-external "https://github.com/gfngfn/satysfi-external-repo.git"
           opam repository add satyrographos-local "git+file://${{ github.workspace }}/develop/repos/satyrographos-repo"
+          opam install -y ocamlfind.1.8.1
 
       - name: Run script
         run: |
