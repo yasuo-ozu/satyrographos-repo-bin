@@ -53,7 +53,7 @@ jobs:
       - name: Install opam-bin
         run: |
           eval $(opam env)
-          opam install -y opam-bin ocaml-option-default-unsafe-string
+          opam install -y opam-bin
           opam-bin install
           opam-bin config --base-url "https://raw.githubusercontent.com/${{ github.repository }}/main/store"
 
@@ -64,7 +64,6 @@ jobs:
           opam switch opam-bin
           opam repository add satysfi-external "https://github.com/gfngfn/satysfi-external-repo.git"
           opam repository add satyrographos-local "git+file://${{ github.workspace }}/develop/repos/satyrographos-repo"
-          opam install -y ocaml-option-default-unsafe-string
 
       - name: Run script
         run: |
