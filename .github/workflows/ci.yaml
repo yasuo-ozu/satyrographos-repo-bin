@@ -53,7 +53,7 @@ jobs:
       - name: Install opam-bin
         run: |
           eval $(opam env)
-          opam install -y opam-bin
+          opam install -y opam-bin ocaml-option-default-unsafe-string
           opam-bin install
           opam-bin config --base-url "https://raw.githubusercontent.com/${{ github.repository }}/main/store"
 
