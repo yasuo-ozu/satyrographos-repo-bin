@@ -31,7 +31,7 @@ elif [[ "$TARGET_ARCH" = "ARM64" ]]; then
 	TARGET_ARCH="arm64"
 fi
 
-eval $(opam env) && opam list --columns=package --installable --color=never --or -A -V $PACKAGES | sed -e '/^#/d' | tac | \
+eval $(opam env) && opam list --columns=package --installable --color=never --or -A -V $PACKAGES | sed -e '/^#/d' | \
 while read PKGNAME; do
 	PKGBASE="${PKGNAME%%.*}"
 	TEMPDIR="$DEST_ARCHIVES_DIR/$PKGNAME"
