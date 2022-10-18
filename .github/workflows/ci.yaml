@@ -62,7 +62,8 @@ jobs:
       - name: Run script
         shell: bash
         run: |
-          ./develop/update.sh "${{ runner.os }}" "${{ runner.arch }}" "${{ github.workspace }}/main/build-log" "${{ github.workspace }}/main/packages" "${{ github.workspace }}/main/store/archives"
+          cd "${{ github.workspace }}/develop"
+          ./update.sh "${{ runner.os }}" "${{ runner.arch }}" "${{ github.workspace }}/main/build-log" "${{ github.workspace }}/main/packages" "${{ github.workspace }}/main/store/archives"
         env:
           OPAMLOGS: "${{ github.workspace }}/main/build-log"
 

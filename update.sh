@@ -35,17 +35,26 @@ eval $(opam env) && opam list --columns=package --installable --color=never --or
 while read PKGNAME; do
 	PKGBASE="${PKGNAME%%.*}"
 	TEMPDIR="$DEST_ARCHIVES_DIR/$PKGNAME"
-	if [[ ! -f "$DEST_ARCHIVES_DIR/$PKGNAME+bin.tar.gz" ]]; then
-		echo "Installing $PKGNAME ($PKGBASE)"
+	DEST_PKGNAME="$PKGNAME+bin"
+	ARCHIVE_NAME="${DEST_PKGNAME}_${TARGET_ARCH}_${TARGET_OS}.tar.gz"
+	ARCHIVE_PATH="$DEST_ARCHIVES_DIR/$ARCHIVE_NAME"
+	DEST_OPAM_PATH="$DEST_PACKAGES_DIR/$PKGBASE/$DEST_PKGNAME/opam"
+	if [[ ! -f "$ARCHIVE_PATH" ]]; then
+		if grep -q "^$ARCHIVE_NAME\$" blacklist ; then
+			echo "# Skipping blacklist package $ARCHIVE_NAME" 1>&2
+			continue
+		fi
+		echo "# Generating archive $ARCHIVE_NAME" 1>&2
 		(
 			rm -rf "$TEMPDIR" && mkdir -p "$TEMPDIR"
+			echo "## Installing $PKGNAME" 1>&2
 			eval $(opam env) && opam install "$PKGNAME" -v -y
-			echo "Copying files..."
+			echo "## Copying files..." 1>&2
 			eval $(opam env) && opam show --list-files "$PKGNAME" | sed -e '/^\s*$/d' | \
 			while read SRC; do
 				# relative path from switch root
 				REL="$(echo "$SRC" | sed -e 's:^.*/_opam/::' -e 's:^.*/.opam/[^/]\+/::')"
-				echo "Copying $SRC to $TEMPDIR/$REL" 1>&2
+				echo "### Copying $SRC to $TEMPDIR/$REL" 1>&2
 				if [[ -d "$SRC" ]]; then
 					mkdir -p "$TEMPDIR/$REL"
 				else
@@ -54,9 +63,9 @@ while read PKGNAME; do
 				fi
 				echo "$REL"
 			done > "$TEMPDIR/files"
-			echo "Removing package..."
+			echo "## Removing package $PKGNAME" 1>&2
 			eval $(opam env) && opam remove -a -y "$PKGNAME" || true
-			echo "Writing install file..."
+			echo "## Writing $PKGBASE.install..." 1>&2
 			echo "bin: [" > "$TEMPDIR/$PKGBASE.install"
 			cat "$TEMPDIR/files" | while read REL; do
 				[[ "${REL%%/*}" = "bin" ]] && echo "  \"$REL\""
@@ -68,23 +77,24 @@ while read PKGNAME; do
 			done >> "$TEMPDIR/$PKGBASE.install"
 			echo "]" >> "$TEMPDIR/$PKGBASE.install"
 			rm "$TEMPDIR/files"
-			echo "Packing files..."
-			tar czvf "$DEST_ARCHIVES_DIR/$PKGNAME+bin.tar.gz" "$TEMPDIR"
+			echo "## Packing files..." 1>&2
+			tar czvf "$ARCHIVE_PATH" "$TEMPDIR"
 			# rm -rf "$TEMPDIR"
-		) || (echo "Failed to generate archive for $PKGNAME"; opam remove -a -y "$PKGNAME"; rm -f "$DEST_ARCHIVES_DIR/$PKGNAME+bin.tar.gz")
+		) || (echo "## Failed to generate archive for $ARCHIVE_NAME" 1>&2 ; opam remove -a -y "$PKGNAME"; rm -f "$ARCHIVE_PATH")
 	else
-		echo "Skipping store $PKGNAME ($PKGBASE)"
+		echo "# Skipping archive generation for $ARCHIVE_NAME" 1>&2
 	fi
-	if [[ -f "$DEST_ARCHIVES_DIR/$PKGNAME+bin.tar.gz" && ! -f "$DEST_PACKAGES_DIR/$PKGBASE/$PKGNAME+bin/opam" ]]; then
-		MD5SUM=$(md5sum "$DEST_ARCHIVES_DIR/$PKGNAME+bin.tar.gz")
-		URL=$(echo -e "from urllib.parse import quote\nprint(quote(\"https://github.com/yasuo-ozu/satyrographos-repo-bin/raw/main/store/archives/$PKGNAME+bin.tar.gz\"))" | python)
-		mkdir -p "$DEST_PACKAGES_DIR/$PKGBASE/$PKGNAME+bin"
-		eval $(opam env) && opam show --raw --no-lint "$PKGNAME" | sed -e '/^name:/d' -e '/^version:/d' | sed -ze 's/url\s*{[^}]*}//' | sed -ze 's/depends:\s*\[[^]]*\]/depends: []/' > "$DEST_PACKAGES_DIR/$PKGBASE/$PKGNAME+bin/opam"
-		echo "url {" >> "$DEST_PACKAGES_DIR/$PKGBASE/$PKGNAME+bin/opam"
-		echo "  archive: \"$URL\"" >> "$DEST_PACKAGES_DIR/$PKGBASE/$PKGNAME+bin/opam"
-		echo "  checksum: \"$MD5SUM\"" >> "$DEST_PACKAGES_DIR/$PKGBASE/$PKGNAME+bin/opam"
-		echo "}" >> "$DEST_PACKAGES_DIR/$PKGBASE/$PKGNAME+bin/opam"
+	if [[ -f "$ARCHIVE_PATH" && ! -f "$DEST_OPAM_PATH" ]]; then
+		MD5SUM=$(md5sum "$ARCHIVE_PATH")
+		URL=$(echo -e "from urllib.parse import quote\nprint(quote(\"https://github.com/yasuo-ozu/satyrographos-repo-bin/raw/main/store/archives/$DEST_PKGNAME\"))" | python)
+		mkdir -p "$DEST_PACKAGES_DIR/$PKGBASE/$DEST_PKGNAME"
+		echo "# Generating OPAM file for $DEST_OPAM_PATH" 1>&2
+		eval $(opam env) && opam show --raw --no-lint "$PKGNAME" | sed -e '/^name:/d' -e '/^version:/d' | sed -ze 's/url\s*{[^}]*}//' | sed -ze 's/depends:\s*\[[^]]*\]/depends: []/' > "$DEST_OPAM_PATH"
+		echo "url {" >> "$DEST_OPAM_PATH"
+		echo "  archive: \"${URL}_%{arch}%_%{os}%.tar.gz\"" >> "$DEST_OPAM_PATH"
+		echo "  checksum: \"$MD5SUM\"" >> "$DEST_OPAM_PATH"
+		echo "}" >> "$DEST_OPAM_PATH"
 	else
-		echo "Skipping opam $PKGNAME ($PKGBASE)"
+		echo "# Skipping opam $PKGNAME" 1>&2
 	fi
 done
