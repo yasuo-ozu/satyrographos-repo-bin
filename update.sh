@@ -95,7 +95,7 @@ while read PKGNAME; do
 		echo "$ARCHIVE_NAME" >> "$FAILED_PACKAGES"
 	fi
 	if [[ -f "$ARCHIVE_PATH" && ! -f "$DEST_OPAM_PATH" ]]; then
-		MD5SUM=$(md5sum "$ARCHIVE_PATH")
+		MD5SUM=$(md5sum "$ARCHIVE_PATH" | sed -e 's/ .*$//')
 		URL=$(echo -e "from urllib.parse import quote\nprint(quote(\"https://github.com/yasuo-ozu/satyrographos-repo-bin/raw/main/store/archives/$DEST_PKGNAME\"))" | python)
 		mkdir -p "$DEST_PACKAGES_DIR/$PKGBASE/$DEST_PKGNAME"
 		echo "# Generating OPAM file for $DEST_OPAM_PATH" 1>&2
