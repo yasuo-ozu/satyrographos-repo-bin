@@ -22,6 +22,10 @@ jobs:
       OPAMSOLVERTIMEOUT: 3600
       OPAMVERBOSE: 1
     steps:
+      - name: Add msbuild to PATH (windows)
+        uses: microsoft/setup-msbuild@v1.1
+        if: runner.os == 'Windows'
+
       - name: Checkout code
         uses: actions/checkout@v3
         with:
@@ -53,7 +57,7 @@ jobs:
       - name: Setup OCaml
         uses: ocaml/setup-ocaml@v2
         with:
-          ocaml-compiler: "4.14.x"
+          ocaml-compiler: "4.12.1"
           opam-repositories: |
             satysfi-external: https://github.com/gfngfn/satysfi-external-repo.git
             satyrographos-repo: https://github.com/na4zagin3/satyrographos-repo.git
@@ -70,7 +74,10 @@ jobs:
       - name: Add files
         shell: bash
         run: |
-          cd "${{ github.workspace }}/main" && git add -f store packages build-log
+          cd "${{ github.workspace }}/main"
+          [ -f store ] && git add -f store
+          [ -f packages ] && git add -f packages
+          [ -f build-log ] && git add -f build-log
 
       - name: Commit & Push changes
         uses: actions-js/push@master

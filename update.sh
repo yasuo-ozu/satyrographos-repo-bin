@@ -8,7 +8,12 @@ DEST_ARCHIVES_DIR="$5"
 FAILED_PACKAGES="$6"
 PACKAGES="satysfi satyrographos"
 
-set -e
+if [[ -z "$TEMPDIR_BASE" ]]; then
+	TEMPDIR_BASE="${DEST_PACKAGES_DIR}/../temp"
+fi
+mkdir -p "$TEMPDIR_BASE"
+
+# set -e
 
 mkdir -p "$DEST_ARCHIVES_DIR" "$DEST_PACKAGES_DIR"
 
@@ -73,7 +78,8 @@ while read PKGNAME; do
 			done >> "$TEMPDIR/$PKGBASE.install"
 			echo "]" >> "$TEMPDIR/$PKGBASE.install"
 			echo "doc: [" >> "$TEMPDIR/$PKGBASE.install"
-			cat "$TEMPDIR/files" | while read REL; do
+			cat "$TEMPDIR/files" | \
+			while read REL; do
 				[[ "${REL%%/*}" = "doc" ]] && echo "  \"$REL\""
 			done >> "$TEMPDIR/$PKGBASE.install"
 			echo "]" >> "$TEMPDIR/$PKGBASE.install"
