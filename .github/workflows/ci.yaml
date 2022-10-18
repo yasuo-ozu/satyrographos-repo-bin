@@ -67,6 +67,7 @@ jobs:
         shell: bash
         run: |
           cd "${{ github.workspace }}/develop"
+          eval $(opam env) && opam remove --yes ocaml
           ./update.sh "${{ runner.os }}" "${{ runner.arch }}" "${{ runner.temp }}" "${{ github.workspace }}/main/packages" "${{ github.workspace }}/main/store/archives" "${{ github.workspace }}/main/build-log/failed-packages"
         env:
           OPAMLOGS: "${{ github.workspace }}/main/build-log"
