@@ -41,6 +41,7 @@ jobs:
         id: determine-default-opam-repo
         # See https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#runner-context
         # and https://github.com/ocaml/setup-ocaml/blob/4ac56b0fd440c3eef30fd1e34c96e0c740a807da/src/constants.ts#L45
+        shell: bash
         run: |
           if [ "${{ runner.os }}" = "Windows" ] ; then
             DEFAULT_OPAM_REPO="https://github.com/fdopen/opam-repository-mingw.git#opam2"
@@ -59,12 +60,14 @@ jobs:
             default: ${{ steps.determine-default-opam-repo.outputs.opam-repo-default }}
 
       - name: Run script
+        shell: bash
         run: |
           ./develop/update.sh "${{ runner.os }}" "${{ runner.arch }}" "${{ github.workspace }}/main/build-log" "${{ github.workspace }}/main/packages" "${{ github.workspace }}/main/store/archives"
         env:
           OPAMLOGS: "${{ github.workspace }}/main/build-log"
 
       - name: Add files
+        shell: bash
         run: |
           cd "${{ github.workspace }}/main" && git add store packages build-log
 
