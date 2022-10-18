@@ -24,10 +24,10 @@ if [[ "$TARGET_OS" = "Windows" ]]; then
 	elif [[ "$TARGET_ARCH" = "X86" ]]; then
 		TARGET_OS="win64"
 	fi
-	if where opam.cmd ; then
-		OPAM="opam.cmd"
-	elif where opam.exe; then
-		OPAM="opam.exe"
+	if where opam.cmd &>/dev/null ; then
+		OPAM="$(where opam.cmd)"
+	elif where opam.exe &>/dev/null ; then
+		OPAM="$(where opam.exe)"
 	fi
 elif [[ "$TARGET_OS" = "Linux" ]]; then
 	TARGET_OS="linux"
