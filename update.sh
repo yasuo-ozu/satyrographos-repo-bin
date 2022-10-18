@@ -21,7 +21,7 @@ mkdir -p "$DEST_ARCHIVES_DIR" "$DEST_PACKAGES_DIR"
 if [[ "$TARGET_OS" = "Windows" ]]; then
 	if [[ "$TARGET_ARCH" = "X86" ]]; then
 		TARGET_OS="win32"
-	elif [[ "$TARGET_ARCH" = "X86" ]]; then
+	elif [[ "$TARGET_ARCH" = "X64" ]]; then
 		TARGET_OS="win64"
 	fi
 	if where opam.cmd &>/dev/null ; then
@@ -33,6 +33,7 @@ elif [[ "$TARGET_OS" = "Linux" ]]; then
 	TARGET_OS="linux"
 elif [[ "$TARGET_OS" = "macOS" ]]; then
 	TARGET_OS="macos"
+	alias sed='gsed'
 fi
 
 if [[ "$TARGET_ARCH" = "X86" ]]; then
@@ -105,12 +106,12 @@ while read PKGNAME; do
 	fi
 	if [[ -f "$ARCHIVE_PATH" && ! -f "$DEST_OPAM_PATH" ]]; then
 		MD5SUM=$(md5sum "$ARCHIVE_PATH" | sed -e 's/ .*$//')
-		URL=$(echo -e "from urllib.parse import quote\nprint(quote(\"https://github.com/yasuo-ozu/satyrographos-repo-bin/raw/main/store/archives/$DEST_PKGNAME\"))" | python)
+		URL=$(echo -e "from urllib.parse import quote\nprint(quote(\"$DEST_PKGNAME\"))" | python)
 		mkdir -p "$DEST_PACKAGES_DIR/$PKGBASE/$DEST_PKGNAME"
 		echo "# Generating OPAM file for $DEST_OPAM_PATH" 1>&2
 		$OPAM show --raw --no-lint "$PKGNAME" | sed -e '/^name:/d' -e '/^version:/d' | sed -ze 's/url\s*{[^}]*}//' | sed -ze 's/depends:\s*\[[^]]*\]/depends: []/' > "$DEST_OPAM_PATH"
 		echo "url {" >> "$DEST_OPAM_PATH"
-		echo "  archive: \"${URL}_%{arch}%_%{os}%.tar.gz\"" >> "$DEST_OPAM_PATH"
+		echo "  archive: \"https://github.com/yasuo-ozu/satyrographos-repo-bin/raw/main/store/archives/${URL}_%{arch}%_%{os}%.tar.gz\"" >> "$DEST_OPAM_PATH"
 		echo "  checksum: \"$MD5SUM\"" >> "$DEST_OPAM_PATH"
 		echo "}" >> "$DEST_OPAM_PATH"
 	else
