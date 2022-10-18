@@ -1,0 +1,15 @@
+File "src/dune", line 6, characters 45-53:
+6 |  (libraries core fileutils json-derivers uri uri.sexp yojson))
+                                                 ^^^^^^^^
+Error: Library "uri.sexp" not found.
+-> required by library "satyrographos" in _build/default/src
+-> required by executable main in bin/dune:2
+-> required by _build/default/bin/main.exe
+-> required by _build/install/default/bin/satyrographos
+-> required by _build/default/satyrographos.install
+-> required by alias install
+(cd _build/default && .ppx/b4175a47579235f9b841d5d1f64bf609/ppx.exe -o bin/main.pp.ml --impl bin/main.ml -corrected-suffix .ppx-corrected -diff-cmd - -dump-ast)
+File "bin/main.ml", lines 92-93, characters 2-26:
+92 | ..Uri.of_string url
+93 |   |> Repository.add repo p
+Error: Jane Street style: Ignored expression must come with a type annotation
