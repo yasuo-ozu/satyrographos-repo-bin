@@ -52,7 +52,7 @@ jobs:
       - name: Setup OCaml
         uses: ocaml/setup-ocaml@v2
         with:
-          ocaml-compiler: ""
+          ocaml-compiler: "4.14.x"
           opam-repositories: |
             satysfi-external: https://github.com/gfngfn/satysfi-external-repo.git
             satyrographos-repo: https://github.com/na4zagin3/satyrographos-repo.git
