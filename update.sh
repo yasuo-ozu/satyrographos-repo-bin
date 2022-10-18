@@ -98,7 +98,7 @@ while read PKGNAME; do
 			echo "]" >> "$TEMPDIR$SEP$PKGBASE.install"
 			rm "$TEMPDIR${SEP}files"
 			echo "## Packing files..." 1>&2
-			tar czvf "$ARCHIVE_PATH" "$TEMPDIR"
+			(cd "$TEMPDIR" && tar czvf "$ARCHIVE_PATH" .)
 			rm -rf "$TEMPDIR"
 		else
 			echo "## Failed to install $PKGNAME. Skipping archive generation for $ARCHIVE_NAME" 1>&2
@@ -112,12 +112,16 @@ while read PKGNAME; do
 		URL=$(echo -e "from urllib.parse import quote\nprint(quote(\"$DEST_PKGNAME\"))" | python)
 		mkdir -p "$DEST_PACKAGES_DIR$SEP$PKGBASE$SEP$DEST_PKGNAME"
 		echo "# Generating OPAM file for $DEST_OPAM_PATH" 1>&2
-		$OPAM show --raw --no-lint "$PKGNAME" | sed -e '/^name:/d' -e '/^version:/d' | sed -ze 's/url\s*{[^}]*}//' | sed -ze 's/depends:\s*\[[^]]*\]/depends: []/' > "$DEST_OPAM_PATH"
+		$OPAM show --raw --no-lint "$PKGNAME" | sed -e '/^name:/d' -e '/^version:/d' | \
+		sed -ze 's/url\s*{[^}]*}//' | sed -ze 's/depends:\s*\[[^]]*\]/depends: []/' | \
+		sed -ze 's/build:\s*\[[^]]*\(\[[^]]*\][^]]*\)*\]//' | \
+		sed -ze 's/install:\s*\[[^]]*\(\[[^]]*\][^]]*\)*\]//' | \
+		sed -ze 's/remove:\s*\[[^]]*\(\[[^]]*\][^]]*\)*\]//' > "$DEST_OPAM_PATH"
 		echo "url {" >> "$DEST_OPAM_PATH"
 		echo "  archive: \"https://github.com/yasuo-ozu/satyrographos-repo-bin/raw/main/store/archives/${URL}.tar.gz\"" >> "$DEST_OPAM_PATH"
 		echo "  checksum: \"$MD5SUM\"" >> "$DEST_OPAM_PATH"
 		echo "}" >> "$DEST_OPAM_PATH"
-		echo "available: [ os = $TARGET_OS & arch = $TARGET_ARCH ]" >> "$DEST_OPAM_PATH"
+		echo "available: [ os = \"$TARGET_OS\" & arch = \"$TARGET_ARCH\" ]" >> "$DEST_OPAM_PATH"
 	else
 		echo "# Skipping opam $PKGNAME" 1>&2
 	fi
