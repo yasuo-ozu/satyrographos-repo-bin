@@ -19,4 +19,4 @@ url {
   archive: "https://github.com/yasuo-ozu/satyrographos-repo-bin/raw/main/store/archives/satysfi.0.0.7%2Bbin_x86_64_linux.tar.gz"
   checksum: "a37768bbe7b171ffdf2abf3792b09d54"
 }
-available: [ os = linux & arch = x86_64 ]
+available: [ os = "linux" & arch = "x86_64" ]
