@@ -22,10 +22,6 @@ jobs:
       OPAMSOLVERTIMEOUT: 3600
       OPAMVERBOSE: 1
     steps:
-      - name: Show opam (windows)
-        if: runner.os == 'Windows'
-        run: |
-          where.exe opam
 
       - name: Add msbuild to PATH (windows)
         uses: microsoft/setup-msbuild@v1.1
@@ -71,6 +67,10 @@ jobs:
             satysfi-external: https://github.com/gfngfn/satysfi-external-repo.git
             satyrographos-repo: https://github.com/na4zagin3/satyrographos-repo.git
             default: ${{ steps.determine-default-opam-repo.outputs.opam-repo-default }}
+      - name: Show opam (windows)
+        if: runner.os == 'Windows'
+        run: |
+          where.exe opam
 
       - name: Run script
         shell: bash
