@@ -7,6 +7,7 @@ DEST_PACKAGES_DIR="$4"
 DEST_ARCHIVES_DIR="$5"
 FAILED_PACKAGES="$6"
 PACKAGES="satysfi satyrographos"
+OPAM=opam
 
 if [[ -z "$TEMPDIR_BASE" ]]; then
 	TEMPDIR_BASE="${DEST_PACKAGES_DIR}/../temp"
@@ -17,10 +18,17 @@ mkdir -p "$TEMPDIR_BASE"
 
 mkdir -p "$DEST_ARCHIVES_DIR" "$DEST_PACKAGES_DIR"
 
-if [[ "$TARGET_OS" = "Windows" && "$TARGET_ARCH" = "X86" ]]; then
-	TARGET_OS="win32"
-elif [[ "$TARGET_OS" = "Windows" && "$TARGET_ARCH" = "X64" ]]; then
-	TARGET_OS="win64"
+if [[ "$TARGET_OS" = "Windows" ]]; then
+	if [[ "$TARGET_ARCH" = "X86" ]]; then
+		TARGET_OS="win32"
+	elif [[ "$TARGET_ARCH" = "X86" ]]; then
+		TARGET_OS="win64"
+	fi
+	if where opam.cmd ; then
+		OPAM="opam.cmd"
+	elif where opam.exe; then
+		OPAM="opam.exe"
+	fi
 elif [[ "$TARGET_OS" = "Linux" ]]; then
 	TARGET_OS="linux"
 elif [[ "$TARGET_OS" = "macOS" ]]; then
@@ -37,7 +45,8 @@ elif [[ "$TARGET_ARCH" = "ARM64" ]]; then
 	TARGET_ARCH="arm64"
 fi
 
-eval $(opam env) && opam list --columns=package --installable --color=never --or -A -V $PACKAGES | sed -e '/^#/d' | \
+eval $($OPAM env)
+$OPAM list --columns=package --installable --color=never --or -A -V $PACKAGES | sed -e '/^#/d' | \
 while read PKGNAME; do
 	PKGBASE="${PKGNAME%%.*}"
 	TEMPDIR="$TEMPDIR_BASE/$PKGNAME"
@@ -53,9 +62,9 @@ while read PKGNAME; do
 		echo "# Generating archive $ARCHIVE_NAME" 1>&2
 		rm -rf "$TEMPDIR" && mkdir -p "$TEMPDIR"
 		echo "## Installing $PKGNAME" 1>&2
-		if eval $(opam env) && opam install "$PKGNAME" -v -y ; then
+		if $OPAM install "$PKGNAME" -v -y ; then
 			echo "## Copying files..." 1>&2
-			eval $(opam env) && opam show --list-files "$PKGNAME" | sed -e '/^\s*$/d' | \
+			$OPAM show --list-files "$PKGNAME" | sed -e '/^\s*$/d' | \
 			while read SRC; do
 				# relative path from switch root
 				REL="$(echo "$SRC" | sed -e 's:^.*/_opam/::' -e 's:^.*/.opam/[^/]\+/::')"
@@ -69,7 +78,7 @@ while read PKGNAME; do
 				echo "$REL"
 			done > "$TEMPDIR/files"
 			echo "## Removing package $PKGNAME" 1>&2
-			eval $(opam env) && opam remove -a -y "$PKGNAME" || true
+			$OPAM remove -a -y "$PKGNAME" || true
 			echo "## Writing $PKGBASE.install..." 1>&2
 			echo "bin: [" > "$TEMPDIR/$PKGBASE.install"
 			cat "$TEMPDIR/files" | \
@@ -99,7 +108,7 @@ while read PKGNAME; do
 		URL=$(echo -e "from urllib.parse import quote\nprint(quote(\"https://github.com/yasuo-ozu/satyrographos-repo-bin/raw/main/store/archives/$DEST_PKGNAME\"))" | python)
 		mkdir -p "$DEST_PACKAGES_DIR/$PKGBASE/$DEST_PKGNAME"
 		echo "# Generating OPAM file for $DEST_OPAM_PATH" 1>&2
-		eval $(opam env) && opam show --raw --no-lint "$PKGNAME" | sed -e '/^name:/d' -e '/^version:/d' | sed -ze 's/url\s*{[^}]*}//' | sed -ze 's/depends:\s*\[[^]]*\]/depends: []/' > "$DEST_OPAM_PATH"
+		$OPAM show --raw --no-lint "$PKGNAME" | sed -e '/^name:/d' -e '/^version:/d' | sed -ze 's/url\s*{[^}]*}//' | sed -ze 's/depends:\s*\[[^]]*\]/depends: []/' > "$DEST_OPAM_PATH"
 		echo "url {" >> "$DEST_OPAM_PATH"
 		echo "  archive: \"${URL}_%{arch}%_%{os}%.tar.gz\"" >> "$DEST_OPAM_PATH"
 		echo "  checksum: \"$MD5SUM\"" >> "$DEST_OPAM_PATH"
