@@ -63,7 +63,7 @@ jobs:
         shell: bash
         run: |
           cd "${{ github.workspace }}/develop"
-          ./update.sh "${{ runner.os }}" "${{ runner.arch }}" "${{ github.workspace }}/main/build-log" "${{ github.workspace }}/main/packages" "${{ github.workspace }}/main/store/archives"
+          ./update.sh "${{ runner.os }}" "${{ runner.arch }}" "${{ env.RUNNER_TEMP }}" "${{ github.workspace }}/main/packages" "${{ github.workspace }}/main/store/archives" "${{ github.workspace }}/main/build-log/failed-packages"
         env:
           OPAMLOGS: "${{ github.workspace }}/main/build-log"
 

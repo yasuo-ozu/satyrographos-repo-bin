@@ -2,9 +2,10 @@
 
 TARGET_OS="$1"
 TARGET_ARCH="$2"
-DEST_LOG_DIR="$3"
+TEMPDIR_BASE="$3"
 DEST_PACKAGES_DIR="$4"
 DEST_ARCHIVES_DIR="$5"
+FAILED_PACKAGES="$6"
 PACKAGES="satysfi satyrographos"
 
 set -e
@@ -34,7 +35,7 @@ fi
 eval $(opam env) && opam list --columns=package --installable --color=never --or -A -V $PACKAGES | sed -e '/^#/d' | \
 while read PKGNAME; do
 	PKGBASE="${PKGNAME%%.*}"
-	TEMPDIR="$DEST_ARCHIVES_DIR/$PKGNAME"
+	TEMPDIR="$TEMPDIR_BASE/$PKGNAME"
 	DEST_PKGNAME="$PKGNAME+bin"
 	ARCHIVE_NAME="${DEST_PKGNAME}_${TARGET_ARCH}_${TARGET_OS}.tar.gz"
 	ARCHIVE_PATH="$DEST_ARCHIVES_DIR/$ARCHIVE_NAME"
@@ -45,10 +46,9 @@ while read PKGNAME; do
 			continue
 		fi
 		echo "# Generating archive $ARCHIVE_NAME" 1>&2
-		(
-			rm -rf "$TEMPDIR" && mkdir -p "$TEMPDIR"
-			echo "## Installing $PKGNAME" 1>&2
-			eval $(opam env) && opam install "$PKGNAME" -v -y
+		rm -rf "$TEMPDIR" && mkdir -p "$TEMPDIR"
+		echo "## Installing $PKGNAME" 1>&2
+		if eval $(opam env) && opam install "$PKGNAME" -v -y ; then
 			echo "## Copying files..." 1>&2
 			eval $(opam env) && opam show --list-files "$PKGNAME" | sed -e '/^\s*$/d' | \
 			while read SRC; do
@@ -67,22 +67,26 @@ while read PKGNAME; do
 			eval $(opam env) && opam remove -a -y "$PKGNAME" || true
 			echo "## Writing $PKGBASE.install..." 1>&2
 			echo "bin: [" > "$TEMPDIR/$PKGBASE.install"
-			cat "$TEMPDIR/files" | while read REL; do
+			cat "$TEMPDIR/files" | \
+			while read REL; do
 				[[ "${REL%%/*}" = "bin" ]] && echo "  \"$REL\""
-				done >> "$TEMPDIR/$PKGBASE.install"
-				echo "]" >> "$TEMPDIR/$PKGBASE.install"
-				echo "doc: [" >> "$TEMPDIR/$PKGBASE.install"
-				cat "$TEMPDIR/files" | while read REL; do
+			done >> "$TEMPDIR/$PKGBASE.install"
+			echo "]" >> "$TEMPDIR/$PKGBASE.install"
+			echo "doc: [" >> "$TEMPDIR/$PKGBASE.install"
+			cat "$TEMPDIR/files" | while read REL; do
 				[[ "${REL%%/*}" = "doc" ]] && echo "  \"$REL\""
 			done >> "$TEMPDIR/$PKGBASE.install"
 			echo "]" >> "$TEMPDIR/$PKGBASE.install"
 			rm "$TEMPDIR/files"
 			echo "## Packing files..." 1>&2
 			tar czvf "$ARCHIVE_PATH" "$TEMPDIR"
-			# rm -rf "$TEMPDIR"
-		) || (echo "## Failed to generate archive for $ARCHIVE_NAME" 1>&2 ; opam remove -a -y "$PKGNAME"; rm -f "$ARCHIVE_PATH")
+			rm -rf "$TEMPDIR"
+		else
+			echo "## Failed to install $PKGNAME. Skipping archive generation for $ARCHIVE_NAME" 1>&2
+		fi
 	else
 		echo "# Skipping archive generation for $ARCHIVE_NAME" 1>&2
+		echo "$ARCHIVE_NAME" >> "$FAILED_PACKAGES"
 	fi
 	if [[ -f "$ARCHIVE_PATH" && ! -f "$DEST_OPAM_PATH" ]]; then
 		MD5SUM=$(md5sum "$ARCHIVE_PATH")
