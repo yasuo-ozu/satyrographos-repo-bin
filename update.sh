@@ -8,11 +8,7 @@ DEST_ARCHIVES_DIR="$5"
 FAILED_PACKAGES="$6"
 PACKAGES="satysfi satyrographos"
 OPAM=opam
-
-if [[ -z "$TEMPDIR_BASE" ]]; then
-	TEMPDIR_BASE="${DEST_PACKAGES_DIR}/../temp"
-fi
-mkdir -p "$TEMPDIR_BASE"
+SEP="/"
 
 # set -e
 
@@ -29,6 +25,7 @@ if [[ "$TARGET_OS" = "Windows" ]]; then
 	elif where opam.exe &>/dev/null ; then
 		OPAM="$(where opam.exe)"
 	fi
+	SEP='\'
 elif [[ "$TARGET_OS" = "Linux" ]]; then
 	TARGET_OS="linux"
 elif [[ "$TARGET_OS" = "macOS" ]]; then
@@ -46,15 +43,21 @@ elif [[ "$TARGET_ARCH" = "ARM64" ]]; then
 	TARGET_ARCH="arm64"
 fi
 
+if [[ -z "$TEMPDIR_BASE" ]]; then
+	TEMPDIR_BASE="${DEST_PACKAGES_DIR}$SEP..${SEP}temp"
+fi
+mkdir -p "$TEMPDIR_BASE"
+
+
 eval $($OPAM env)
 $OPAM list --columns=package --installable --color=never --or -A -V $PACKAGES | sed -e '/^#/d' | \
 while read PKGNAME; do
 	PKGBASE="${PKGNAME%%.*}"
-	TEMPDIR="$TEMPDIR_BASE/$PKGNAME"
-	DEST_PKGNAME="$PKGNAME+bin"
-	ARCHIVE_NAME="${DEST_PKGNAME}_${TARGET_ARCH}_${TARGET_OS}.tar.gz"
-	ARCHIVE_PATH="$DEST_ARCHIVES_DIR/$ARCHIVE_NAME"
-	DEST_OPAM_PATH="$DEST_PACKAGES_DIR/$PKGBASE/$DEST_PKGNAME/opam"
+	TEMPDIR="$TEMPDIR_BASE$SEP$PKGNAME"
+	DEST_PKGNAME="$PKGNAME+bin_${TARGET_ARCH}_${TARGET_OS}"
+	ARCHIVE_NAME="${DEST_PKGNAME}.tar.gz"
+	ARCHIVE_PATH="$DEST_ARCHIVES_DIR$SEP$ARCHIVE_NAME"
+	DEST_OPAM_PATH="$DEST_PACKAGES_DIR$SEP$PKGBASE$SEP$DEST_PKGNAME${SEP}opam"
 	if [[ ! -f "$ARCHIVE_PATH" ]]; then
 		if grep -q "^$ARCHIVE_NAME\$" blacklist ; then
 			echo "# Skipping blacklist package $ARCHIVE_NAME" 1>&2
@@ -68,32 +71,32 @@ while read PKGNAME; do
 			$OPAM show --list-files "$PKGNAME" | sed -e '/^\s*$/d' | \
 			while read SRC; do
 				# relative path from switch root
-				REL="$(echo "$SRC" | sed -e 's:^.*/_opam/::' -e 's:^.*/.opam/[^/]\+/::')"
-				echo "### Copying $SRC to $TEMPDIR/$REL" 1>&2
+				REL="$(echo "$SRC" | sed -e 's:^.*[/\\]_opam[/\\]::' -e 's:^.*[/\\].opam[/\\][^/\\]\+[/\\]::')"
+				echo "### Copying $SRC to $TEMPDIR$SEP$REL" 1>&2
 				if [[ -d "$SRC" ]]; then
-					mkdir -p "$TEMPDIR/$REL"
+					mkdir -p "$TEMPDIR$SEP$REL"
 				else
-					mkdir -p "$TEMPDIR/${REL%/*}"
-					cp -r "$SRC" "$TEMPDIR/$REL"
+					mkdir -p "$TEMPDIR$SEP${REL%/*}"
+					cp -r "$SRC" "$TEMPDIR$SEP$REL"
 				fi
 				echo "$REL"
-			done > "$TEMPDIR/files"
+			done > "$TEMPDIR${SEP}files"
 			echo "## Removing package $PKGNAME" 1>&2
 			$OPAM remove -a -y "$PKGNAME" || true
 			echo "## Writing $PKGBASE.install..." 1>&2
-			echo "bin: [" > "$TEMPDIR/$PKGBASE.install"
-			cat "$TEMPDIR/files" | \
+			echo "bin: [" > "$TEMPDIR$SEP$PKGBASE.install"
+			cat "$TEMPDIR${SEP}files" | \
 			while read REL; do
 				[[ "${REL%%/*}" = "bin" ]] && echo "  \"$REL\""
-			done >> "$TEMPDIR/$PKGBASE.install"
-			echo "]" >> "$TEMPDIR/$PKGBASE.install"
-			echo "doc: [" >> "$TEMPDIR/$PKGBASE.install"
-			cat "$TEMPDIR/files" | \
+			done >> "$TEMPDIR$SEP$PKGBASE.install"
+			echo "]" >> "$TEMPDIR$SEP$PKGBASE.install"
+			echo "doc: [" >> "$TEMPDIR$SEP$PKGBASE.install"
+			cat "$TEMPDIR${SEP}files" | \
 			while read REL; do
 				[[ "${REL%%/*}" = "doc" ]] && echo "  \"$REL\""
-			done >> "$TEMPDIR/$PKGBASE.install"
-			echo "]" >> "$TEMPDIR/$PKGBASE.install"
-			rm "$TEMPDIR/files"
+			done >> "$TEMPDIR$SEP$PKGBASE.install"
+			echo "]" >> "$TEMPDIR$SEP$PKGBASE.install"
+			rm "$TEMPDIR${SEP}files"
 			echo "## Packing files..." 1>&2
 			tar czvf "$ARCHIVE_PATH" "$TEMPDIR"
 			rm -rf "$TEMPDIR"
@@ -107,13 +110,14 @@ while read PKGNAME; do
 	if [[ -f "$ARCHIVE_PATH" && ! -f "$DEST_OPAM_PATH" ]]; then
 		MD5SUM=$(md5sum "$ARCHIVE_PATH" | sed -e 's/ .*$//')
 		URL=$(echo -e "from urllib.parse import quote\nprint(quote(\"$DEST_PKGNAME\"))" | python)
-		mkdir -p "$DEST_PACKAGES_DIR/$PKGBASE/$DEST_PKGNAME"
+		mkdir -p "$DEST_PACKAGES_DIR$SEP$PKGBASE$SEP$DEST_PKGNAME"
 		echo "# Generating OPAM file for $DEST_OPAM_PATH" 1>&2
 		$OPAM show --raw --no-lint "$PKGNAME" | sed -e '/^name:/d' -e '/^version:/d' | sed -ze 's/url\s*{[^}]*}//' | sed -ze 's/depends:\s*\[[^]]*\]/depends: []/' > "$DEST_OPAM_PATH"
 		echo "url {" >> "$DEST_OPAM_PATH"
-		echo "  archive: \"https://github.com/yasuo-ozu/satyrographos-repo-bin/raw/main/store/archives/${URL}_%{arch}%_%{os}%.tar.gz\"" >> "$DEST_OPAM_PATH"
+		echo "  archive: \"https://github.com/yasuo-ozu/satyrographos-repo-bin/raw/main/store/archives/${URL}.tar.gz\"" >> "$DEST_OPAM_PATH"
 		echo "  checksum: \"$MD5SUM\"" >> "$DEST_OPAM_PATH"
 		echo "}" >> "$DEST_OPAM_PATH"
+		echo "available: [ os = $TARGET_OS & arch = $TARGET_ARCH ]" >> "$DEST_OPAM_PATH"
 	else
 		echo "# Skipping opam $PKGNAME" 1>&2
 	fi
