@@ -75,9 +75,9 @@ jobs:
         shell: bash
         run: |
           cd "${{ github.workspace }}/main"
-          [ -f store ] && git add -f store
-          [ -f packages ] && git add -f packages
-          [ -f build-log ] && git add -f build-log
+          [ -f store ] && git add -f store || true
+          [ -f packages ] && git add -f packages || true
+          [ -f build-log ] && git add -f build-log || true
 
       - name: Commit & Push changes
         uses: actions-js/push@master
