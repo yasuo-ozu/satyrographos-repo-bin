@@ -1,5 +1,0 @@
-[33m#[0m [33mcontext[0m     2.1.2 | linux/x86_64 | ocaml-base-compiler.4.14.0 | git+file:///home/runner/work/satyrographos-repo-bin/satyrographos-repo-bin/develop/repos/satyrographos-repo
-[33m#[0m [33mpath[0m        ~/work/satyrographos-repo-bin/satyrographos-repo-bin/_opam/.opam-switch/build/satyrographos.0.0.2.5
-[33m#[0m [33mcommand[0m     ~/.opam/plugins/opam-bin/opam-bin.exe wrap-build satyrographos 0.0.2.5 core.v0.14.1 dune.2.9.3 fileutils.0.6.3 json-derivers.1.0.0 ocaml.4.14.0 opam-format.2.0.10 ppx_deriving.5.2.1 ppx_jane.v0.14.0 shexp.v0.14.0 uri.4.2.0 uri-sexp.4.2.0 yojson.2.0.0 -- dune build -p satyrographos -j 2
-[33m#[0m [33menv-file[0m    ~/work/satyrographos-repo-bin/satyrographos-repo-bin/main/build-log/satyrographos-20688-7b2980.env
-[33m#[0m [33moutput-file[0m ~/work/satyrographos-repo-bin/satyrographos-repo-bin/main/build-log/satyrographos-20688-7b2980.out

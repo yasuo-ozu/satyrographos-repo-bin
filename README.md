@@ -11,7 +11,7 @@ Add this repository in your opam environment
 ```bash
 opam repository add satysfi-external https://github.com/gfngfn/satysfi-external-repo.git
 opam repository add satyrographos-repo-bin https://github.com/yasuo-ozu/satyrographos-repo-bin.git
-opam repository add satyrographos-repo https://github.com/na4zagin3/satyrographos-repo.git
+opam repository add satyrographos-repo --rank 2 https://github.com/na4zagin3/satyrographos-repo.git
 ```
 
 You may also want to use `--all-switches` option to enable this repo on all switches.
