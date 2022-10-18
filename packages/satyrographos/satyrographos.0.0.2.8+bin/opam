@@ -1,0 +1,32 @@
+opam-version: "2.0"
+synopsis: "A package manager for SATySFi"
+description: """\
+Satyrographos is a package manager for [SATySFi].
+
+Satyrographos is distributed under the LGPL-3.0 license.
+
+
+  [SATySFi]: https://github.com/gfngfn/SATySFi
+  [Satyrographos]: https://github.com/na4zagin3/satyrographos"""
+maintainer: "SAKAMOTO Noriaki <mrty.ityt.pt@gmail.com>"
+authors: "SAKAMOTO Noriaki <mrty.ityt.pt@gmail.com>"
+license: "LGPL-3.0-or-later"
+homepage: "https://github.com/na4zagin3/satyrographos"
+bug-reports: "https://github.com/na4zagin3/satyrographos/issues"
+depends: []
+conflicts: [
+  "yojson" {>= "2.0.0"}
+]
+build: [
+  ["dune" "subst"] {dev}
+  ["sed" "-i.bak" "-e" "s/%%%%VERSION_NUM%%%%/%{version}%/" "bin/main.ml"]
+  ["dune" "build" "-p" name "-j" jobs]
+]
+run-test: ["dune" "runtest"]
+depexts: ["diffutils"] {with-test}
+dev-repo: "git+https://github.com/na4zagin3/satyrographos.git"
+
+url {
+  archive: "https%3A//github.com/yasuo-ozu/satyrographos-repo-bin/raw/main/store/archives/satyrographos.0.0.2.8%2Bbin_%{arch}%_%{os}%.tar.gz"
+  checksum: "c3c9074e8ecb02d17342d6b0105a8b0d  /home/runner/work/satyrographos-repo-bin/satyrographos-repo-bin/main/store/archives/satyrographos.0.0.2.8+bin_x86_64_linux.tar.gz"
+}
