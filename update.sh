@@ -21,9 +21,9 @@ if [[ "$TARGET_OS" = "Windows" && "$TARGET_ARCH" = "X86" ]]; then
 	TARGET_OS="win32"
 elif [[ "$TARGET_OS" = "Windows" && "$TARGET_ARCH" = "X64" ]]; then
 	TARGET_OS="win64"
-elif [[ "TARGET_OS" = "Linux" ]]; then
+elif [[ "$TARGET_OS" = "Linux" ]]; then
 	TARGET_OS="linux"
-elif [[ "TARGET_OS" = "macOS" ]]; then
+elif [[ "$TARGET_OS" = "macOS" ]]; then
 	TARGET_OS="macos"
 fi
 
