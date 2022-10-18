@@ -71,6 +71,12 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           where.exe opam
+          $Env:Path
+      - name: Show path (windows)
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          echo $PATH
 
       - name: Run script
         shell: bash
