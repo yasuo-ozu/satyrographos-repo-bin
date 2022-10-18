@@ -7,12 +7,6 @@ authors: "gfngfn"
 homepage: "https://github.com/gfngfn/SATySFi"
 bug-reports: "https://github.com/gfngfn/SATySFi/issues"
 depends: []
-build: [
-  ["mkdir" "-p" "temp"]
-  [make "-f" "Makefile" "PREFIX=%{prefix}%"]
-]
-install: [make "-f" "Makefile" "install" "PREFIX=%{prefix}%"]
-remove: [make "-f" "Makefile" "uninstall" "PREFIX=%{prefix}%"]
 dev-repo: "git+https://github.com/gfngfn/SATySFi.git"
 
 url {
