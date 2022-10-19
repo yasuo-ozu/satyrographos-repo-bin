@@ -43,6 +43,10 @@ elif [[ "$TARGET_ARCH" = "ARM64" ]]; then
 	TARGET_ARCH="arm64"
 fi
 
+DEST_ARCHIVES_DIR=$(echo "$DEST_ARCHIVES_DIR" | sed -e "s:/:$SEP:g")
+DEST_PACKAGES_DIR=$(echo "$DEST_PACKAGES_DIR" | sed -e "s:/:$SEP:g")
+FAILED_PACKAGES=$(echo "$FAILED_PACKAGES" | sed -e "s:/:$SEP:g")
+
 if [[ -z "$TEMPDIR_BASE" ]]; then
 	TEMPDIR_BASE="${DEST_PACKAGES_DIR}$SEP..${SEP}temp"
 fi
@@ -77,7 +81,7 @@ while read PKGNAME; do
 					mkdir -p "$TEMPDIR$SEP$REL"
 				else
 					mkdir -p "$TEMPDIR$SEP${REL%/*}"
-					cp -r "$SRC" "$TEMPDIR$SEP$REL"
+					cp -R "$SRC" "$TEMPDIR$SEP$REL"
 				fi
 				echo "$REL"
 			done > "$TEMPDIR${SEP}files"
