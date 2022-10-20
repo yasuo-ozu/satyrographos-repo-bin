@@ -87,7 +87,7 @@ jobs:
         shell: bash
         run: |
           cd "${{ github.workspace }}/main"
-          cp -nR store packages build-log "${{ github.workspace }}/main-new"
+          cp -R -n store packages build-log "${{ github.workspace }}/main-new"
 
       - name: Add files
         shell: bash

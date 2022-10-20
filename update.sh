@@ -8,6 +8,7 @@ DEST_ARCHIVES_DIR="$5"
 FAILED_PACKAGES="$6"
 PACKAGES="satysfi satyrographos"
 OPAM=opam
+PYTHON=python
 SEP="/"
 
 # set -e
@@ -26,6 +27,7 @@ if [[ "$TARGET_OS" = "Windows" ]]; then
 		OPAM="$(where opam.exe)"
 	fi
 	SEP='\'
+	PYTHON=python.exe
 elif [[ "$TARGET_OS" = "Linux" ]]; then
 	TARGET_OS="linux"
 elif [[ "$TARGET_OS" = "macOS" ]]; then
@@ -113,7 +115,7 @@ while read PKGNAME; do
 	fi
 	if [[ -f "$ARCHIVE_PATH" && ! -f "$DEST_OPAM_PATH" ]]; then
 		MD5SUM=$(md5sum "$ARCHIVE_PATH" | sed -e 's/ .*$//')
-		URL=$(echo -e "from urllib.parse import quote\nprint(quote(\"$DEST_PKGNAME\"))" | python)
+		URL=$(echo -e "from urllib.parse import quote\nprint(quote(\"$DEST_PKGNAME\"))" | $PYTHON)
 		mkdir -p "$DEST_PACKAGES_DIR$SEP$PKGBASE$SEP$DEST_PKGNAME"
 		echo "# Generating OPAM file for $DEST_OPAM_PATH" 1>&2
 		$OPAM show --raw --no-lint "$PKGNAME" | sed -e '/^name:/d' -e '/^version:/d' | \
