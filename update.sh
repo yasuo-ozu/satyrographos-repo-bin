@@ -28,9 +28,9 @@ if [[ "$TARGET_OS" = "Windows" ]]; then
 	fi
 	SEP='\'
 	PYTHON=python.exe
-	DEST_ARCHIVES_DIR=$(echo "$DEST_ARCHIVES_DIR" | sed -e 's:/:\:g')
-	DEST_PACKAGES_DIR=$(echo "$DEST_PACKAGES_DIR" | sed -e 's:/:\:g')
-	FAILED_PACKAGES=$(echo "$FAILED_PACKAGES" | sed -e 's:/:\:g')
+	DEST_ARCHIVES_DIR=$(echo "$DEST_ARCHIVES_DIR" | sed -e 's:/:\\:g')
+	DEST_PACKAGES_DIR=$(echo "$DEST_PACKAGES_DIR" | sed -e 's:/:\\:g')
+	FAILED_PACKAGES=$(echo "$FAILED_PACKAGES" | sed -e 's:/:\\:g')
 elif [[ "$TARGET_OS" = "Linux" ]]; then
 	TARGET_OS="linux"
 elif [[ "$TARGET_OS" = "macOS" ]]; then
