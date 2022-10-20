@@ -28,6 +28,9 @@ if [[ "$TARGET_OS" = "Windows" ]]; then
 	fi
 	SEP='\'
 	PYTHON=python.exe
+	DEST_ARCHIVES_DIR=$(echo "$DEST_ARCHIVES_DIR" | sed -e 's:/:\:g')
+	DEST_PACKAGES_DIR=$(echo "$DEST_PACKAGES_DIR" | sed -e 's:/:\:g')
+	FAILED_PACKAGES=$(echo "$FAILED_PACKAGES" | sed -e 's:/:\:g')
 elif [[ "$TARGET_OS" = "Linux" ]]; then
 	TARGET_OS="linux"
 elif [[ "$TARGET_OS" = "macOS" ]]; then
@@ -45,9 +48,6 @@ elif [[ "$TARGET_ARCH" = "ARM64" ]]; then
 	TARGET_ARCH="arm64"
 fi
 
-DEST_ARCHIVES_DIR=$(echo "$DEST_ARCHIVES_DIR" | sed -e "s:/:$SEP:g")
-DEST_PACKAGES_DIR=$(echo "$DEST_PACKAGES_DIR" | sed -e "s:/:$SEP:g")
-FAILED_PACKAGES=$(echo "$FAILED_PACKAGES" | sed -e "s:/:$SEP:g")
 
 if [[ -z "$TEMPDIR_BASE" ]]; then
 	TEMPDIR_BASE="${DEST_PACKAGES_DIR}$SEP..${SEP}temp"

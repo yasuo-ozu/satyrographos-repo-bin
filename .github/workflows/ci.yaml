@@ -27,6 +27,9 @@ jobs:
         uses: microsoft/setup-msbuild@v1.1
         if: runner.os == 'Windows'
 
+      - uses: actions/setup-python@v2
+        if: runner.os == 'Windows'
+
       - name: install md5sum (macOS)
         run: brew install md5sha1sum gnu-sed
         if: runner.os == 'macOS'
@@ -87,7 +90,9 @@ jobs:
         shell: bash
         run: |
           cd "${{ github.workspace }}/main"
-          cp -R -n store packages build-log "${{ github.workspace }}/main-new"
+          [ -e store ] && cp -R -n store "${{ github.workspace }}/main-new" | true
+          [ -e packages ] && cp -R -n packages "${{ github.workspace }}/main-new" | true
+          [ -e build-log ] && cp -R -n build-log "${{ github.workspace }}/main-new" | true
 
       - name: Add files
         shell: bash
