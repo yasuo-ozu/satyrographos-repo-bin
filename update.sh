@@ -104,7 +104,7 @@ while read PKGNAME; do
 			echo "]" >> "$TEMPDIR$SEP$PKGBASE.install"
 			rm "$TEMPDIR${SEP}files"
 			echo "## Packing files..." 1>&2
-			(cd "$TEMPDIR" && tar czvf "$ARCHIVE_PATH" .)
+			(cd "$TEMPDIR" && tar --force-local czvf "$ARCHIVE_PATH" .)
 			rm -rf "$TEMPDIR"
 		else
 			echo "## Failed to install $PKGNAME. Skipping archive generation for $ARCHIVE_NAME" 1>&2

@@ -90,9 +90,9 @@ jobs:
         shell: bash
         run: |
           cd "${{ github.workspace }}/main"
-          [ -e store ] && cp -R -n store "${{ github.workspace }}/main-new" | true
-          [ -e packages ] && cp -R -n packages "${{ github.workspace }}/main-new" | true
-          [ -e build-log ] && cp -R -n build-log "${{ github.workspace }}/main-new" | true
+          [ -e store ] && cp -R -n store "${{ github.workspace }}/main-new/" || true
+          [ -e packages ] && cp -R -n packages "${{ github.workspace }}/main-new/" || true
+          [ -e build-log ] && cp -R -n build-log "${{ github.workspace }}/main-new/" || true
 
       - name: Add files
         shell: bash
