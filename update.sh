@@ -85,6 +85,7 @@ while read PKGNAME; do
 					mkdir -p "$TEMPDIR$SEP${REL%/*}"
 					cp -R "$SRC" "$TEMPDIR$SEP$REL"
 				fi
+				[ -e "$TEMPDIR$SEP$REL" ]
 				echo "$REL"
 			done > "$TEMPDIR${SEP}files"
 			echo "## Removing package $PKGNAME" 1>&2
@@ -104,7 +105,7 @@ while read PKGNAME; do
 			echo "]" >> "$TEMPDIR$SEP$PKGBASE.install"
 			rm "$TEMPDIR${SEP}files"
 			echo "## Packing files..." 1>&2
-			(cd "$TEMPDIR" && tar --force-local czvf "$ARCHIVE_PATH" .)
+			(cd "$TEMPDIR" && tar czvf "$ARCHIVE_PATH" . --force-local )
 			rm -rf "$TEMPDIR"
 		else
 			echo "## Failed to install $PKGNAME. Skipping archive generation for $ARCHIVE_NAME" 1>&2
