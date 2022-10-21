@@ -13,6 +13,10 @@ SEP="/"
 
 set -e
 
+if where python3 &>/dev/null; then
+	PYTHON=python3
+fi
+
 mkdir -p "$DEST_ARCHIVES_DIR" "$DEST_PACKAGES_DIR"
 
 if [[ "$TARGET_OS" = "Windows" ]]; then
