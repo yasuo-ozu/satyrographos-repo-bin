@@ -34,7 +34,7 @@ jobs:
 
       - name: Install
         shell: bash
-        if: runner.os == "Linux"
+        if: runner.os == 'Linux'
         run: |
           opam install -y "satysfi.0.0.7+bin_x86_64_linux"
           opam install -y "satyrographos.0.0.2.11+bin_x86_64_linux"
