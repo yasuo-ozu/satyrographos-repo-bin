@@ -105,7 +105,11 @@ while read PKGNAME; do
 				echo "]" >> "$TEMPDIR$SEP$PKGBASE.install"
 				rm "$TEMPDIR${SEP}files"
 				echo "## Packing files..." 1>&2
-				(cd "$TEMPDIR" && tar czvf "$ARCHIVE_PATH" . --force-local )
+				if [[ "$TARGET_OS" = "macos" ]]; then
+					(cd "$TEMPDIR" && tar czvf "$ARCHIVE_PATH" . )
+				else
+					(cd "$TEMPDIR" && tar czvf "$ARCHIVE_PATH" . --force-local )
+				fi
 			) && echo "## Installing $PKGNAME succeed." || true
 			rm -rf "$TEMPDIR"
 		else
