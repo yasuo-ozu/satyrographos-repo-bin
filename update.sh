@@ -8,10 +8,11 @@ DEST_ARCHIVES_DIR="$5"
 FAILED_PACKAGES="$6"
 PACKAGES="satysfi satyrographos"
 OPAM=opam
+OPAM_INSTALL_FLAGS=--update-invariant
 PYTHON=python
 SEP="/"
 
-# set -e
+set -e
 
 mkdir -p "$DEST_ARCHIVES_DIR" "$DEST_PACKAGES_DIR"
 
@@ -54,6 +55,14 @@ if [[ -z "$TEMPDIR_BASE" ]]; then
 fi
 mkdir -p "$TEMPDIR_BASE"
 
+OPAM_VER=$($OPAM --version)
+OPAM_VER_MAJ="${OPAM_VER%%.*}"
+OPAM_VER_MIN="${OPAM_VER%.*}"
+OPAM_VER_MIN="${OPAM_VER#*.}"
+if [[ "$OPAM_VER_MAJ" = "1" || "$OPAM_VER_MIN" = "0" ]]; then
+	OPAM_INSTALL_FLAGS="--unlock-base"
+fi
+
 
 eval $($OPAM env)
 $OPAM list --columns=package --installable --color=never --or -A -V $PACKAGES | sed -e '/^#/d' | \
@@ -72,7 +81,7 @@ while read PKGNAME; do
 		echo "# Generating archive $ARCHIVE_NAME" 1>&2
 		rm -rf "$TEMPDIR" && mkdir -p "$TEMPDIR"
 		echo "## Installing $PKGNAME" 1>&2
-		if $OPAM install "$PKGNAME" -v -y ; then
+		if $OPAM install $OPAM_INSTALL_FLAGS "$PKGNAME" -v -y ; then
 			echo "## Copying files..." 1>&2
 			$OPAM show --list-files "$PKGNAME" | sed -e '/^\s*$/d' | \
 			while read SRC; do
