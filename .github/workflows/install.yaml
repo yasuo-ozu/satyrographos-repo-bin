@@ -24,7 +24,9 @@ jobs:
       - name: Add msbuild to PATH (windows)
         uses: microsoft/setup-msbuild@v1.1
         if: runner.os == 'Windows'
-
+      - name: install crew packs (macOS)
+        run: brew install md5sha1sum gnu-sed
+        if: runner.os == 'macOS'
       - name: Determine the default OPAM Repo
         id: determine-default-opam-repo
         # See https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#runner-context
@@ -48,31 +50,16 @@ jobs:
 
       - name: Install
         shell: bash
-        if: runner.os == 'Linux'
         run: |
-          opam install -y "satysfi.0.0.7+bin_x86_64_linux"
-          opam install -y "satyrographos.0.0.2.11+bin_x86_64_linux"
-
-      - name: Install
-        shell: bash
-        if: runner.os == 'macOS'
-        run: |
-          opam install -y "satysfi.0.0.7+bin_x86_64_macos"
-          opam install -y "satyrographos.0.0.2.11+bin_x86_64_macos"
-
-      - name: Install
-        shell: bash
-        if: runner.os == 'Windows'
-        run: |
-          if where opam.cmd &>/dev/null ; then
-              OPAM="$(where opam.cmd)"
-          elif where opam.exe &>/dev/null ; then
-              OPAM="$(where opam.exe)"
+          if where gsed &>/dev/null ; then
+            alias sed=gsed
           fi
-          $OPAM install -y "satysfi.0.0.7+bin_x86_64_win64"
-          $OPAM install -y "satyrographos.0.0.2.11+bin_x86_64_win64"
-
-
-
-
-
+          if where opam.cmd &>/dev/null ; then
+            alias opam="$(where opam.cmd)"
+          elif where opam.exe &>/dev/null ; then
+            alias opam="$(where opam.exe)"
+          fi
+          opam list --columns=package --installable --color=never --or -A -V satysfi satyrpgraphos | sed -e '/^#/d' | while read PKG; do
+            opam install -y "$PKG"
+            opam remove -a -y "$PKG"
+          done
