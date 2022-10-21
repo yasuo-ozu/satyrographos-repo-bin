@@ -1,0 +1,45 @@
+name: Install test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  install:
+    name: Install Test
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - "ubuntu-latest"
+          - "macos-latest"
+          - "windows-latest"
+    runs-on: ${{ matrix.os }}
+    env:
+      OPAMSOLVERTIMEOUT: 3600
+      OPAMVERBOSE: 1
+    steps:
+
+      - name: Add msbuild to PATH (windows)
+        uses: microsoft/setup-msbuild@v1.1
+        if: runner.os == 'Windows'
+
+      - name: Setup OCaml
+        uses: ocaml/setup-ocaml@v2
+        with:
+          ocaml-compiler: "4.12.1"
+          opam-repositories: |
+            satyrographos-repo-bin: https://github.com/yasuo-ozu/satyrographos-repo-bin.git
+
+      - name: Install
+        shell: bash
+        if: runner.os == "Linux"
+        run: |
+          opam install -y "satysfi.0.0.7+bin_x86_64_linux"
+          opam install -y "satyrographos.0.0.2.11+bin_x86_64_linux"
+
+
+
+
+
