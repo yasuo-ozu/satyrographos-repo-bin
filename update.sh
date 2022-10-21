@@ -72,39 +72,41 @@ while read PKGNAME; do
 		rm -rf "$TEMPDIR" && mkdir -p "$TEMPDIR"
 		echo "## Installing $PKGNAME" 1>&2
 		if $OPAM install --update-invariant "$PKGNAME" -v -y || $OPAM install --unlock-base "$PKGNAME" -v -y ; then
-			echo "## Copying files..." 1>&2
-			$OPAM show --list-files "$PKGNAME" | sed -e '/^\s*$/d' | \
-			while read SRC; do
-				# relative path from switch root
-				REL="$(echo "$SRC" | sed -e 's:^.*[/\\]_opam[/\\]::' -e 's:^.*[/\\].opam[/\\][^/\\]\+[/\\]::')"
-				echo "### Copying $SRC to $TEMPDIR$SEP$REL" 1>&2
-				if [[ -d "$SRC" ]]; then
-					mkdir -p "$TEMPDIR$SEP$REL"
-				else
-					mkdir -p "$TEMPDIR$SEP${REL%/*}"
-					cp -R "$SRC" "$TEMPDIR$SEP$REL"
-				fi
-				[ -e "$TEMPDIR$SEP$REL" ]
-				echo "$REL"
-			done > "$TEMPDIR${SEP}files"
-			echo "## Removing package $PKGNAME" 1>&2
-			$OPAM remove -a -y "$PKGNAME" || true
-			echo "## Writing $PKGBASE.install..." 1>&2
-			echo "bin: [" > "$TEMPDIR$SEP$PKGBASE.install"
-			cat "$TEMPDIR${SEP}files" | \
-			while read REL; do
-				[[ "${REL%%/*}" = "bin" && -f "$TEMPDIR$SEP$REL" ]] && echo "  \"$REL\""
-			done >> "$TEMPDIR$SEP$PKGBASE.install"
-			echo "]" >> "$TEMPDIR$SEP$PKGBASE.install"
-			echo "doc: [" >> "$TEMPDIR$SEP$PKGBASE.install"
-			cat "$TEMPDIR${SEP}files" | \
-			while read REL; do
-				[[ "${REL%%/*}" = "doc" && -f "$TEMPDIR$SEP$REL" ]] && echo "  \"$REL\""
-			done >> "$TEMPDIR$SEP$PKGBASE.install"
-			echo "]" >> "$TEMPDIR$SEP$PKGBASE.install"
-			rm "$TEMPDIR${SEP}files"
-			echo "## Packing files..." 1>&2
-			(cd "$TEMPDIR" && tar czvf "$ARCHIVE_PATH" . --force-local )
+			(
+				echo "## Copying files..." 1>&2
+				$OPAM show --list-files "$PKGNAME" | sed -e '/^\s*$/d' | \
+				while read SRC; do
+					# relative path from switch root
+					REL="$(echo "$SRC" | sed -e 's:^.*[/\\]_opam[/\\]::' -e 's:^.*[/\\].opam[/\\][^/\\]\+[/\\]::')"
+					echo "### Copying $SRC to $TEMPDIR$SEP$REL" 1>&2
+					if [[ -d "$SRC" ]]; then
+						mkdir -p "$TEMPDIR$SEP$REL"
+					else
+						mkdir -p "$TEMPDIR$SEP${REL%/*}"
+						cp -R "$SRC" "$TEMPDIR$SEP$REL"
+					fi
+					[ -e "$TEMPDIR$SEP$REL" ]
+					echo "$REL"
+				done > "$TEMPDIR${SEP}files"
+				echo "## Removing package $PKGNAME" 1>&2
+				$OPAM remove -a -y "$PKGNAME" || true
+				echo "## Writing $PKGBASE.install..." 1>&2
+				echo "bin: [" > "$TEMPDIR$SEP$PKGBASE.install"
+				cat "$TEMPDIR${SEP}files" | \
+				while read REL; do
+					[[ "${REL%%/*}" = "bin" && -f "$TEMPDIR$SEP$REL" ]] && echo "  \"$REL\"" || true
+				done >> "$TEMPDIR$SEP$PKGBASE.install"
+				echo "]" >> "$TEMPDIR$SEP$PKGBASE.install"
+				echo "doc: [" >> "$TEMPDIR$SEP$PKGBASE.install"
+				cat "$TEMPDIR${SEP}files" | \
+				while read REL; do
+					[[ "${REL%%/*}" = "doc" && -f "$TEMPDIR$SEP$REL" ]] && echo "  \"$REL\"" || true
+				done >> "$TEMPDIR$SEP$PKGBASE.install"
+				echo "]" >> "$TEMPDIR$SEP$PKGBASE.install"
+				rm "$TEMPDIR${SEP}files"
+				echo "## Packing files..." 1>&2
+				(cd "$TEMPDIR" && tar czvf "$ARCHIVE_PATH" . --force-local )
+			) && echo "## Installing $PKGNAME succeed." || true
 			rm -rf "$TEMPDIR"
 		else
 			echo "## Failed to install $PKGNAME. Skipping archive generation for $ARCHIVE_NAME" 1>&2
