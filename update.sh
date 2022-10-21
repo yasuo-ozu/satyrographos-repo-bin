@@ -94,13 +94,13 @@ while read PKGNAME; do
 			echo "bin: [" > "$TEMPDIR$SEP$PKGBASE.install"
 			cat "$TEMPDIR${SEP}files" | \
 			while read REL; do
-				[[ "${REL%%/*}" = "bin" ]] && echo "  \"$REL\""
+				[[ "${REL%%/*}" = "bin" && -f "$TEMPDIR$SEP$REL" ]] && echo "  \"$REL\""
 			done >> "$TEMPDIR$SEP$PKGBASE.install"
 			echo "]" >> "$TEMPDIR$SEP$PKGBASE.install"
 			echo "doc: [" >> "$TEMPDIR$SEP$PKGBASE.install"
 			cat "$TEMPDIR${SEP}files" | \
 			while read REL; do
-				[[ "${REL%%/*}" = "doc" ]] && echo "  \"$REL\""
+				[[ "${REL%%/*}" = "doc" && -f "$TEMPDIR$SEP$REL" ]] && echo "  \"$REL\""
 			done >> "$TEMPDIR$SEP$PKGBASE.install"
 			echo "]" >> "$TEMPDIR$SEP$PKGBASE.install"
 			rm "$TEMPDIR${SEP}files"
