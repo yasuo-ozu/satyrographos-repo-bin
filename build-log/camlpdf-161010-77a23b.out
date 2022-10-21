@@ -1,0 +1,162 @@
+make[1]: Entering directory '/home/runner/work/satyrographos-repo-bin/satyrographos-repo-bin/_opam/.opam-switch/build/camlpdf.2.2.2+satysfi'
+ocamlfind ocamldep -native pdfmerge.mli > ._ncdi/pdfmerge.di
+ocamlfind ocamldep -native pdftype0.mli > ._ncdi/pdftype0.di
+ocamlfind ocamldep -native pdftruetype.mli > ._ncdi/pdftruetype.di
+ocamlfind ocamldep -native pdftype1.mli > ._ncdi/pdftype1.di
+ocamlfind ocamldep -native pdfcff.mli > ._ncdi/pdfcff.di
+ocamlfind ocamldep -native pdfocg.mli > ._ncdi/pdfocg.di
+ocamlfind ocamldep -native pdfdate.mli > ._ncdi/pdfdate.di
+ocamlfind ocamldep -native pdfshapes.mli > ._ncdi/pdfshapes.di
+ocamlfind ocamldep -native pdfgraphics.mli > ._ncdi/pdfgraphics.di
+ocamlfind ocamldep -native pdfstandard14.mli > ._ncdi/pdfstandard14.di
+ocamlfind ocamldep -native pdftext.mli > ._ncdi/pdftext.di
+ocamlfind ocamldep -native pdfglyphlist.mli > ._ncdi/pdfglyphlist.di
+ocamlfind ocamldep -native pdfafmdata.mli > ._ncdi/pdfafmdata.di
+ocamlfind ocamldep -native pdfafm.mli > ._ncdi/pdfafm.di
+ocamlfind ocamldep -native pdfimage.mli > ._ncdi/pdfimage.di
+ocamlfind ocamldep -native pdfspace.mli > ._ncdi/pdfspace.di
+ocamlfind ocamldep -native pdffun.mli > ._ncdi/pdffun.di
+ocamlfind ocamldep -native pdfannot.mli > ._ncdi/pdfannot.di
+ocamlfind ocamldep -native pdfpage.mli > ._ncdi/pdfpage.di
+ocamlfind ocamldep -native pdfpagelabels.mli > ._ncdi/pdfpagelabels.di
+ocamlfind ocamldep -native pdfmarks.mli > ._ncdi/pdfmarks.di
+ocamlfind ocamldep -native pdfaction.mli > ._ncdi/pdfaction.di
+ocamlfind ocamldep -native pdfdest.mli > ._ncdi/pdfdest.di
+ocamlfind ocamldep -native pdfops.mli > ._ncdi/pdfops.di
+ocamlfind ocamldep -native pdfjpeg.mli > ._ncdi/pdfjpeg.di
+ocamlfind ocamldep -native pdfread.mli > ._ncdi/pdfread.di
+ocamlfind ocamldep -native pdfgenlex.mli > ._ncdi/pdfgenlex.di
+ocamlfind ocamldep -native pdfwrite.mli > ._ncdi/pdfwrite.di
+ocamlfind ocamldep -native pdfcodec.mli > ._ncdi/pdfcodec.di
+ocamlfind ocamldep -native pdfflate.mli > ._ncdi/pdfflate.di
+ocamlfind ocamldep -native pdfcrypt.mli > ._ncdi/pdfcrypt.di
+ocamlfind ocamldep -native pdf.mli > ._ncdi/pdf.di
+ocamlfind ocamldep -native pdfcryptprimitives.mli > ._ncdi/pdfcryptprimitives.di
+ocamlfind ocamldep -native pdfpaper.mli > ._ncdi/pdfpaper.di
+ocamlfind ocamldep -native pdfunits.mli > ._ncdi/pdfunits.di
+ocamlfind ocamldep -native pdftransform.mli > ._ncdi/pdftransform.di
+ocamlfind ocamldep -native pdfio.mli > ._ncdi/pdfio.di
+ocamlfind ocamldep -native pdfutil.mli > ._ncdi/pdfutil.di
+ocamlfind ocamldep pdfmerge.ml > ._d/pdfmerge.d
+ocamlfind ocamldep pdftype0.ml > ._d/pdftype0.d
+ocamlfind ocamldep pdftruetype.ml > ._d/pdftruetype.d
+ocamlfind ocamldep pdftype1.ml > ._d/pdftype1.d
+ocamlfind ocamldep pdfcff.ml > ._d/pdfcff.d
+ocamlfind ocamldep pdfocg.ml > ._d/pdfocg.d
+ocamlfind ocamldep pdfdate.ml > ._d/pdfdate.d
+ocamlfind ocamldep pdfshapes.ml > ._d/pdfshapes.d
+ocamlfind ocamldep pdfgraphics.ml > ._d/pdfgraphics.d
+ocamlfind ocamldep pdfstandard14.ml > ._d/pdfstandard14.d
+ocamlfind ocamldep pdftext.ml > ._d/pdftext.d
+ocamlfind ocamldep pdfglyphlist.ml > ._d/pdfglyphlist.d
+ocamlfind ocamldep pdfafmdata.ml > ._d/pdfafmdata.d
+ocamlfind ocamldep pdfafm.ml > ._d/pdfafm.d
+ocamlfind ocamldep pdfimage.ml > ._d/pdfimage.d
+ocamlfind ocamldep pdfspace.ml > ._d/pdfspace.d
+ocamlfind ocamldep pdffun.ml > ._d/pdffun.d
+ocamlfind ocamldep pdfannot.ml > ._d/pdfannot.d
+ocamlfind ocamldep pdfpage.ml > ._d/pdfpage.d
+ocamlfind ocamldep pdfpagelabels.ml > ._d/pdfpagelabels.d
+ocamlfind ocamldep pdfmarks.ml > ._d/pdfmarks.d
+ocamlfind ocamldep pdfaction.ml > ._d/pdfaction.d
+ocamlfind ocamldep pdfdest.ml > ._d/pdfdest.d
+ocamlfind ocamldep pdfops.ml > ._d/pdfops.d
+ocamlfind ocamldep pdfjpeg.ml > ._d/pdfjpeg.d
+ocamlfind ocamldep pdfread.ml > ._d/pdfread.d
+ocamlfind ocamldep pdfgenlex.ml > ._d/pdfgenlex.d
+ocamlfind ocamldep pdfwrite.ml > ._d/pdfwrite.d
+ocamlfind ocamldep pdfcodec.ml > ._d/pdfcodec.d
+ocamlfind ocamldep pdfflate.ml > ._d/pdfflate.d
+ocamlfind ocamldep pdfcrypt.ml > ._d/pdfcrypt.d
+ocamlfind ocamldep pdf.ml > ._d/pdf.d
+ocamlfind ocamldep pdfcryptprimitives.ml > ._d/pdfcryptprimitives.d
+ocamlfind ocamldep pdfpaper.ml > ._d/pdfpaper.d
+ocamlfind ocamldep pdfunits.ml > ._d/pdfunits.d
+ocamlfind ocamldep pdftransform.ml > ._d/pdftransform.d
+ocamlfind ocamldep pdfio.ml > ._d/pdfio.d
+ocamlfind ocamldep pdfutil.ml > ._d/pdfutil.d
+ocamlc -c -cc "cc" -ccopt "-fPIC  \
+			-DPIC -DNATIVE_CODE   \
+			    -o flatestubs.o " flatestubs.c
+flatestubs.c: In function ‘camlzip_error’:
+flatestubs.c:42:23: warning: assignment discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+   42 |     camlzip_error_exn = caml_named_value("Zlib.Error");
+      |                       ^
+flatestubs.c:44:13: warning: "invalid_argument" is deprecated: use "caml_invalid_argument" instead
+   44 |       invalid_argument("Exception Zlib.Error not initialized");
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                        
+flatestubs.c:47:13: warning: "copy_string" is deprecated: use "caml_copy_string" instead
+   47 |     s1 = copy_string(fn);
+      |             ^~~~~~~~~~~~~                                                    
+flatestubs.c:48:13: warning: "copy_string" is deprecated: use "caml_copy_string" instead
+   48 |     s2 = copy_string(msg);
+      |             ^~~~~~~~~~~~~~                                                   
+flatestubs.c:49:13: warning: "alloc_small" is deprecated: use "caml_alloc_small" instead
+   49 |     bucket = alloc_small(3, 0);
+      |             ^~~~~~~~~~~~~~~~~~~                                              
+flatestubs.c:54:13: warning: "mlraise" is deprecated: use "caml_raise" instead
+   54 |   mlraise(bucket);
+      |             ^~~~~~                                                 
+flatestubs.c: In function ‘camlzip_new_stream’:
+flatestubs.c:59:13: warning: "alloc" is deprecated: use "caml_alloc" instead
+   59 |   value res = alloc((sizeof(z_stream) + sizeof(value) - 1) / sizeof(value),
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+flatestubs.c: In function ‘camlzip_deflate’:
+flatestubs.c:104:13: warning: "alloc_small" is deprecated: use "caml_alloc_small" instead
+  104 |   res = alloc_small(3, 0);
+      |             ^~~~~~~~~~~~~~                                                   
+flatestubs.c: In function ‘camlzip_inflate’:
+flatestubs.c:153:13: warning: "alloc_small" is deprecated: use "caml_alloc_small" instead
+  153 |   res = alloc_small(3, 0);
+      |             ^~~~~~~~~~~~~~                                                   
+flatestubs.c: In function ‘camlzip_update_crc32’:
+flatestubs.c:175:13: warning: "copy_int32" is deprecated: use "caml_copy_int32" instead
+  175 |   return copy_int32(crc32((uint32_t) Int32_val(crc),
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                       
+ocamlc -c -cc "cc" -ccopt "-fPIC  \
+			-DPIC -DNATIVE_CODE   \
+			    -o rijndael-alg-fst.o " rijndael-alg-fst.c
+ocamlc -c -cc "cc" -ccopt "-fPIC  \
+			-DPIC -DNATIVE_CODE   \
+			    -o stubs-aes.o " stubs-aes.c
+stubs-aes.c: In function ‘caml_aes_cook_encrypt_key’:
+stubs-aes.c:29:13: warning: "alloc_string" is deprecated: use "caml_alloc_string" instead
+   29 |   value ckey = alloc_string(Cooked_key_size);
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                                  
+stubs-aes.c:33:13: warning: "string_length" is deprecated: use "caml_string_length" instead
+   33 |                         8 * string_length(key));
+      |             ^           ~~~~~~~~~~~~~~~~~~~~~~~~                                 
+stubs-aes.c: In function ‘caml_aes_cook_decrypt_key’:
+stubs-aes.c:41:13: warning: "alloc_string" is deprecated: use "caml_alloc_string" instead
+   41 |   value ckey = alloc_string(Cooked_key_size);
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                                  
+stubs-aes.c:45:13: warning: "string_length" is deprecated: use "caml_string_length" instead
+   45 |                         8 * string_length(key));
+      |             ^           ~~~~~~~~~~~~~~~~~~~~~~~~                                 
+ocamlc -c -cc "cc" -ccopt "-fPIC  \
+			-DPIC -DNATIVE_CODE   \
+			    -o sha2.o " sha2.c
+ocamlc -c -cc "cc" -ccopt "-fPIC  \
+			-DPIC -DNATIVE_CODE   \
+			    -o stubs-sha2.o " stubs-sha2.c
+stubs-sha2.c: In function ‘caml_sha256’:
+stubs-sha2.c:9:13: warning: "alloc_string" is deprecated: use "caml_alloc_string" instead
+    9 |   value digest = alloc_string(32);
+      |             ^~~~~~~~~~~~~~~~~~~~~~                                             
+stubs-sha2.c: In function ‘caml_sha384’:
+stubs-sha2.c:19:13: warning: "alloc_string" is deprecated: use "caml_alloc_string" instead
+   19 |   value digest = alloc_string(48);
+      |             ^~~~~~~~~~~~~~~~~~~~~~                                             
+stubs-sha2.c: In function ‘caml_sha512’:
+stubs-sha2.c:29:13: warning: "alloc_string" is deprecated: use "caml_alloc_string" instead
+   29 |   value digest = alloc_string(64);
+      |             ^~~~~~~~~~~~~~~~~~~~~~                                             
+ar rcs libcamlpdf_stubs.a  flatestubs.o rijndael-alg-fst.o stubs-aes.o sha2.o stubs-sha2.o
+ocamlfind ocamlc -package bigarray -c pdfutil.mli
+ocamlfind ocamlopt -package bigarray -c -g -unsafe-string -annot -w -3 pdfutil.ml
+ocamlopt.opt: OCaml has been configured with -force-safe-string: -unsafe-string is not available.
+Usage: ocamlopt <options> <files>
+Try 'ocamlopt --help' for more information.
+make[1]: *** [OCamlMakefile:1076: pdfutil.cmx] Error 2
+make[1]: Leaving directory '/home/runner/work/satyrographos-repo-bin/satyrographos-repo-bin/_opam/.opam-switch/build/camlpdf.2.2.2+satysfi'
+make: *** [OCamlMakefile:801: native-code-library] Error 2
