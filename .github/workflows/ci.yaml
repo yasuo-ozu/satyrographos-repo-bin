@@ -28,7 +28,7 @@ jobs:
         if: runner.os == 'Windows'
 
       - uses: actions/setup-python@v2
-        if: runner.os == 'Windows'
+        if: runner.os != 'Linux'
 
       - name: install md5sum (macOS)
         run: brew install md5sha1sum gnu-sed
