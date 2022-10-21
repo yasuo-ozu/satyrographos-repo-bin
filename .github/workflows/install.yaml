@@ -53,6 +53,20 @@ jobs:
           opam install -y "satysfi.0.0.7+bin_x86_64_linux"
           opam install -y "satyrographos.0.0.2.11+bin_x86_64_linux"
 
+      - name: Install
+        shell: bash
+        if: runner.os == 'macOS'
+        run: |
+          opam install -y "satysfi.0.0.7+bin_x86_64_macos"
+          opam install -y "satyrographos.0.0.2.11+bin_x86_64_macos"
+
+      - name: Install
+        shell: bash
+        if: runner.os == 'Windows'
+        run: |
+          opam install -y "satysfi.0.0.7+bin_x86_64_win64"
+          opam install -y "satyrographos.0.0.2.11+bin_x86_64_win64"
+
 
 
 
