@@ -64,8 +64,13 @@ jobs:
         shell: bash
         if: runner.os == 'Windows'
         run: |
-          opam install -y "satysfi.0.0.7+bin_x86_64_win64"
-          opam install -y "satyrographos.0.0.2.11+bin_x86_64_win64"
+          if where opam.cmd &>/dev/null ; then
+              OPAM="$(where opam.cmd)"
+          elif where opam.exe &>/dev/null ; then
+              OPAM="$(where opam.exe)"
+          fi
+          $OPAM install -y "satysfi.0.0.7+bin_x86_64_win64"
+          $OPAM install -y "satyrographos.0.0.2.11+bin_x86_64_win64"
 
 
 
