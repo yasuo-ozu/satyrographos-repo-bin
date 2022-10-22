@@ -10,11 +10,16 @@ PACKAGES="satysfi satyrographos"
 OPAM=opam
 PYTHON=python
 SEP="/"
+SED=sed
 
 set -e
 
 if where python3 &>/dev/null; then
 	PYTHON=python3
+fi
+
+if where gsed &>/dev/null; then
+	SED=gsed
 fi
 
 mkdir -p "$DEST_ARCHIVES_DIR" "$DEST_PACKAGES_DIR"
@@ -32,14 +37,13 @@ if [[ "$TARGET_OS" = "Windows" ]]; then
 	fi
 	SEP='\'
 	PYTHON=python.exe
-	DEST_ARCHIVES_DIR=$(echo "$DEST_ARCHIVES_DIR" | sed -e 's:/:\\:g')
-	DEST_PACKAGES_DIR=$(echo "$DEST_PACKAGES_DIR" | sed -e 's:/:\\:g')
-	FAILED_PACKAGES=$(echo "$FAILED_PACKAGES" | sed -e 's:/:\\:g')
+	DEST_ARCHIVES_DIR=$(echo "$DEST_ARCHIVES_DIR" | $SED -e 's:/:\\:g')
+	DEST_PACKAGES_DIR=$(echo "$DEST_PACKAGES_DIR" | $SED -e 's:/:\\:g')
+	FAILED_PACKAGES=$(echo "$FAILED_PACKAGES" | $SED -e 's:/:\\:g')
 elif [[ "$TARGET_OS" = "Linux" ]]; then
 	TARGET_OS="linux"
 elif [[ "$TARGET_OS" = "macOS" ]]; then
 	TARGET_OS="macos"
-	alias sed='gsed'
 fi
 
 if [[ "$TARGET_ARCH" = "X86" ]]; then
@@ -59,7 +63,7 @@ fi
 mkdir -p "$TEMPDIR_BASE"
 
 eval $($OPAM env)
-$OPAM list --columns=package --installable --color=never --or -A -V $PACKAGES | sed -e '/^#/d' | \
+$OPAM list --columns=package --installable --color=never --or -A -V $PACKAGES | $SED -e '/^#/d' | \
 while read PKGNAME; do
 	PKGBASE="${PKGNAME%%.*}"
 	TEMPDIR="$TEMPDIR_BASE$SEP$PKGNAME"
@@ -78,10 +82,10 @@ while read PKGNAME; do
 		if $OPAM install --update-invariant "$PKGNAME" -v -y || $OPAM install --unlock-base "$PKGNAME" -v -y ; then
 			(
 				echo "## Copying files..." 1>&2
-				$OPAM show --list-files "$PKGNAME" | sed -e '/^\s*$/d' | \
+				$OPAM show --list-files "$PKGNAME" | $SED -e '/^\s*$/d' | \
 				while read SRC; do
 					# relative path from switch root
-					REL="$(echo "$SRC" | sed -e 's:^.*[/\\]_opam[/\\]::' -e 's:^.*[/\\].opam[/\\][^/\\]\+[/\\]::')"
+					REL="$(echo "$SRC" | $SED -e 's:^.*[/\\]_opam[/\\]::' -e 's:^.*[/\\].opam[/\\][^/\\]\+[/\\]::')"
 					echo "### Copying $SRC to $TEMPDIR$SEP$REL" 1>&2
 					if [[ -d "$SRC" ]]; then
 						mkdir -p "$TEMPDIR$SEP$REL"
@@ -124,15 +128,15 @@ while read PKGNAME; do
 		echo "$ARCHIVE_NAME" >> "$FAILED_PACKAGES"
 	fi
 	if [[ -f "$ARCHIVE_PATH" && ! -f "$DEST_OPAM_PATH" ]]; then
-		MD5SUM=$(md5sum "$ARCHIVE_PATH" | sed -e 's/ .*$//')
+		MD5SUM=$(md5sum "$ARCHIVE_PATH" | $SED -e 's/ .*$//')
 		URL=$(echo -e "from urllib.parse import quote\nprint(quote(\"$DEST_PKGNAME\"))" | $PYTHON)
 		mkdir -p "$DEST_PACKAGES_DIR$SEP$PKGBASE$SEP$DEST_PKGNAME"
 		echo "# Generating OPAM file for $DEST_OPAM_PATH" 1>&2
-		$OPAM show --raw --no-lint "$PKGNAME" | sed -e '/^name:/d' -e '/^version:/d' | \
-		sed -ze 's/url\s*{[^}]*}//' | sed -ze 's/depends:\s*\[[^]]*\]/depends: []/' | \
-		sed -ze 's/build:\s*\[[^]]*\(\[[^]]*\][^]]*\)*\]//' | \
-		sed -ze 's/install:\s*\[[^]]*\(\[[^]]*\][^]]*\)*\]//' | \
-		sed -ze 's/remove:\s*\[[^]]*\(\[[^]]*\][^]]*\)*\]//' > "$DEST_OPAM_PATH"
+		$OPAM show --raw --no-lint "$PKGNAME" | $SED -e '/^name:/d' -e '/^version:/d' | \
+		$SED -ze 's/url\s*{[^}]*}//' | $SED -ze 's/depends:\s*\[[^]]*\]/depends: []/' | \
+		$SED -ze 's/build:\s*\[[^]]*\(\[[^]]*\][^]]*\)*\]//' | \
+		$SED -ze 's/install:\s*\[[^]]*\(\[[^]]*\][^]]*\)*\]//' | \
+		$SED -ze 's/remove:\s*\[[^]]*\(\[[^]]*\][^]]*\)*\]//' > "$DEST_OPAM_PATH"
 		echo "url {" >> "$DEST_OPAM_PATH"
 		echo "  archive: \"https://github.com/yasuo-ozu/satyrographos-repo-bin/raw/main/store/archives/${URL}.tar.gz\"" >> "$DEST_OPAM_PATH"
 		echo "  checksum: \"$MD5SUM\"" >> "$DEST_OPAM_PATH"
