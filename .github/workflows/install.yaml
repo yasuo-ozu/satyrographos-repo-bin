@@ -51,15 +51,17 @@ jobs:
       - name: Install
         shell: bash
         run: |
+          SED=sed
           if where gsed &>/dev/null ; then
-            alias sed=gsed
+            SED=gsed
           fi
+          OPAM=opam
           if where opam.cmd &>/dev/null ; then
-            alias opam="$(where opam.cmd)"
+            OPAM="$(where opam.cmd)"
           elif where opam.exe &>/dev/null ; then
-            alias opam="$(where opam.exe)"
+            OPAM="$(where opam.exe)"
           fi
-          opam list --columns=package --installable --color=never --or -A -V satysfi satyrpgraphos | sed -e '/^#/d' | while read PKG; do
-            opam install -y "$PKG"
-            opam remove -a -y "$PKG"
+          $OPAM list --columns=package --installable --color=never --or -A -V satysfi satyrpgraphos | $SED -e '/^#/d' | while read PKG; do
+            $OPAM install -y "$PKG"
+            $OPAM remove -a -y "$PKG"
           done
