@@ -33,7 +33,7 @@ jobs:
       - name: install md5sum (macOS)
         run: |
           brew install md5sha1sum
-          brew install gnu-sed --with-default-names
+          brew install gnu-sed
         if: runner.os == 'macOS'
 
       - name: Checkout code
