@@ -23,7 +23,7 @@ if where gsed &>/dev/null; then
 fi
 
 mkdir -p "$DEST_ARCHIVES_DIR" "$DEST_PACKAGES_DIR"
-
+ 
 if [[ "$TARGET_OS" = "Windows" ]]; then
 	if [[ "$TARGET_ARCH" = "X86" ]]; then
 		TARGET_OS="win32"
