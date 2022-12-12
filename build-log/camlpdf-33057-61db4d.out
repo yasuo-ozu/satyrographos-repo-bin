@@ -1,0 +1,309 @@
+make[1]: Entering directory '/home/runner/work/satyrographos-repo-bin/satyrographos-repo-bin/_opam/.opam-switch/build/camlpdf.2.2.2+satysfi'
+ocamlfind ocamldep -native pdfmerge.mli > ._ncdi/pdfmerge.di
+ocamlfind ocamldep -native pdftype0.mli > ._ncdi/pdftype0.di
+ocamlfind ocamldep -native pdftruetype.mli > ._ncdi/pdftruetype.di
+ocamlfind ocamldep -native pdftype1.mli > ._ncdi/pdftype1.di
+ocamlfind ocamldep -native pdfcff.mli > ._ncdi/pdfcff.di
+ocamlfind ocamldep -native pdfocg.mli > ._ncdi/pdfocg.di
+ocamlfind ocamldep -native pdfdate.mli > ._ncdi/pdfdate.di
+ocamlfind ocamldep -native pdfshapes.mli > ._ncdi/pdfshapes.di
+ocamlfind ocamldep -native pdfgraphics.mli > ._ncdi/pdfgraphics.di
+ocamlfind ocamldep -native pdfstandard14.mli > ._ncdi/pdfstandard14.di
+ocamlfind ocamldep -native pdftext.mli > ._ncdi/pdftext.di
+ocamlfind ocamldep -native pdfglyphlist.mli > ._ncdi/pdfglyphlist.di
+ocamlfind ocamldep -native pdfafmdata.mli > ._ncdi/pdfafmdata.di
+ocamlfind ocamldep -native pdfafm.mli > ._ncdi/pdfafm.di
+ocamlfind ocamldep -native pdfimage.mli > ._ncdi/pdfimage.di
+ocamlfind ocamldep -native pdfspace.mli > ._ncdi/pdfspace.di
+ocamlfind ocamldep -native pdffun.mli > ._ncdi/pdffun.di
+ocamlfind ocamldep -native pdfannot.mli > ._ncdi/pdfannot.di
+ocamlfind ocamldep -native pdfpage.mli > ._ncdi/pdfpage.di
+ocamlfind ocamldep -native pdfpagelabels.mli > ._ncdi/pdfpagelabels.di
+ocamlfind ocamldep -native pdfmarks.mli > ._ncdi/pdfmarks.di
+ocamlfind ocamldep -native pdfaction.mli > ._ncdi/pdfaction.di
+ocamlfind ocamldep -native pdfdest.mli > ._ncdi/pdfdest.di
+ocamlfind ocamldep -native pdfops.mli > ._ncdi/pdfops.di
+ocamlfind ocamldep -native pdfjpeg.mli > ._ncdi/pdfjpeg.di
+ocamlfind ocamldep -native pdfread.mli > ._ncdi/pdfread.di
+ocamlfind ocamldep -native pdfgenlex.mli > ._ncdi/pdfgenlex.di
+ocamlfind ocamldep -native pdfwrite.mli > ._ncdi/pdfwrite.di
+ocamlfind ocamldep -native pdfcodec.mli > ._ncdi/pdfcodec.di
+ocamlfind ocamldep -native pdfflate.mli > ._ncdi/pdfflate.di
+ocamlfind ocamldep -native pdfcrypt.mli > ._ncdi/pdfcrypt.di
+ocamlfind ocamldep -native pdf.mli > ._ncdi/pdf.di
+ocamlfind ocamldep -native pdfcryptprimitives.mli > ._ncdi/pdfcryptprimitives.di
+ocamlfind ocamldep -native pdfpaper.mli > ._ncdi/pdfpaper.di
+ocamlfind ocamldep -native pdfunits.mli > ._ncdi/pdfunits.di
+ocamlfind ocamldep -native pdftransform.mli > ._ncdi/pdftransform.di
+ocamlfind ocamldep -native pdfio.mli > ._ncdi/pdfio.di
+ocamlfind ocamldep -native pdfutil.mli > ._ncdi/pdfutil.di
+ocamlfind ocamldep pdfmerge.ml > ._d/pdfmerge.d
+ocamlfind ocamldep pdftype0.ml > ._d/pdftype0.d
+ocamlfind ocamldep pdftruetype.ml > ._d/pdftruetype.d
+ocamlfind ocamldep pdftype1.ml > ._d/pdftype1.d
+ocamlfind ocamldep pdfcff.ml > ._d/pdfcff.d
+ocamlfind ocamldep pdfocg.ml > ._d/pdfocg.d
+ocamlfind ocamldep pdfdate.ml > ._d/pdfdate.d
+ocamlfind ocamldep pdfshapes.ml > ._d/pdfshapes.d
+ocamlfind ocamldep pdfgraphics.ml > ._d/pdfgraphics.d
+ocamlfind ocamldep pdfstandard14.ml > ._d/pdfstandard14.d
+ocamlfind ocamldep pdftext.ml > ._d/pdftext.d
+ocamlfind ocamldep pdfglyphlist.ml > ._d/pdfglyphlist.d
+ocamlfind ocamldep pdfafmdata.ml > ._d/pdfafmdata.d
+ocamlfind ocamldep pdfafm.ml > ._d/pdfafm.d
+ocamlfind ocamldep pdfimage.ml > ._d/pdfimage.d
+ocamlfind ocamldep pdfspace.ml > ._d/pdfspace.d
+ocamlfind ocamldep pdffun.ml > ._d/pdffun.d
+ocamlfind ocamldep pdfannot.ml > ._d/pdfannot.d
+ocamlfind ocamldep pdfpage.ml > ._d/pdfpage.d
+ocamlfind ocamldep pdfpagelabels.ml > ._d/pdfpagelabels.d
+ocamlfind ocamldep pdfmarks.ml > ._d/pdfmarks.d
+ocamlfind ocamldep pdfaction.ml > ._d/pdfaction.d
+ocamlfind ocamldep pdfdest.ml > ._d/pdfdest.d
+ocamlfind ocamldep pdfops.ml > ._d/pdfops.d
+ocamlfind ocamldep pdfjpeg.ml > ._d/pdfjpeg.d
+ocamlfind ocamldep pdfread.ml > ._d/pdfread.d
+ocamlfind ocamldep pdfgenlex.ml > ._d/pdfgenlex.d
+ocamlfind ocamldep pdfwrite.ml > ._d/pdfwrite.d
+ocamlfind ocamldep pdfcodec.ml > ._d/pdfcodec.d
+ocamlfind ocamldep pdfflate.ml > ._d/pdfflate.d
+ocamlfind ocamldep pdfcrypt.ml > ._d/pdfcrypt.d
+ocamlfind ocamldep pdf.ml > ._d/pdf.d
+ocamlfind ocamldep pdfcryptprimitives.ml > ._d/pdfcryptprimitives.d
+ocamlfind ocamldep pdfpaper.ml > ._d/pdfpaper.d
+ocamlfind ocamldep pdfunits.ml > ._d/pdfunits.d
+ocamlfind ocamldep pdftransform.ml > ._d/pdftransform.d
+ocamlfind ocamldep pdfio.ml > ._d/pdfio.d
+ocamlfind ocamldep pdfutil.ml > ._d/pdfutil.d
+ocamlc -c -cc "cc" -ccopt "-fPIC  \
+			-DPIC -DNATIVE_CODE   \
+			    -o flatestubs.o " flatestubs.c
+flatestubs.c: In function ‘camlzip_error’:
+flatestubs.c:42:23: warning: assignment discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+   42 |     camlzip_error_exn = caml_named_value("Zlib.Error");
+      |                       ^
+ocamlc -c -cc "cc" -ccopt "-fPIC  \
+			-DPIC -DNATIVE_CODE   \
+			    -o rijndael-alg-fst.o " rijndael-alg-fst.c
+ocamlc -c -cc "cc" -ccopt "-fPIC  \
+			-DPIC -DNATIVE_CODE   \
+			    -o stubs-aes.o " stubs-aes.c
+ocamlc -c -cc "cc" -ccopt "-fPIC  \
+			-DPIC -DNATIVE_CODE   \
+			    -o sha2.o " sha2.c
+ocamlc -c -cc "cc" -ccopt "-fPIC  \
+			-DPIC -DNATIVE_CODE   \
+			    -o stubs-sha2.o " stubs-sha2.c
+ar rcs libcamlpdf_stubs.a  flatestubs.o rijndael-alg-fst.o stubs-aes.o sha2.o stubs-sha2.o
+ocamlfind ocamlc -package bigarray -c pdfutil.mli
+ocamlfind ocamlopt -package bigarray -c -g -unsafe-string -annot -w -3 pdfutil.ml
+ocamlopt.opt: OCaml has been configured with -force-safe-string: -unsafe-string is not available.
+Usage: ocamlopt <options> <files>
+Options are:
+  -fPIC  Generate position-independent machine code (default)
+  -fno-PIC  Generate position-dependent machine code
+  -a  Build a library
+  -alert <list>  Enable or disable alerts according to <list>:
+        +<alertname>  enable alert <alertname>
+        -<alertname>  disable alert <alertname>
+        ++<alertname> treat <alertname> as fatal error
+        --<alertname> treat <alertname> as non-fatal
+        @<alertname>  enable <alertname> and treat it as fatal error
+    <alertname> can be 'all' to refer to all alert names
+  -absname  Show absolute filenames in error messages
+  -afl-instrument Enable instrumentation for afl-fuzz
+  -afl-inst-ratio Configure percentage of branches instrumented
+     (advanced, see afl-fuzz docs for AFL_INST_RATIO)
+  -annot  (deprecated) Save information in <filename>.annot
+  -bin-annot  Save typedtree in <filename>.cmt
+  -inline-branch-factor <n>|<round>=<n>[,...]  Estimate the probability of a branch being cold as 1/(1+n) (used for inlining) (default 0.10)
+  -c  Compile only (do not link)
+  -cc <command>  Use <command> as the C compiler and linker
+  -cclib <opt>  Pass option <opt> to the C linker
+  -ccopt <opt>  Pass option <opt> to the C compiler and linker
+  -clambda-checks  Instrument clambda code with closure and field access checks (for debugging the compiler)
+  -Oclassic  Make inlining decisions at function definition time rather than at the call site (replicates previous behaviour of the compiler)
+  -color {auto|always|never}  Enable or disable colors in compiler messages
+    The following settings are supported:
+      auto    use heuristics to enable colors only if supported
+      always  enable colors
+      never   disable colors
+    The default setting is 'auto', and the current heuristic
+    checks that the TERM environment variable exists and is
+    not empty or "dumb", and that isatty(stderr) holds.
+  If the option is not specified, these setting can alternatively
+  be set through the OCAML_COLOR environment variable.
+  -error-style {contextual|short}  Control the way error messages and warnings are printed
+    The following settings are supported:
+      short       only print the error and its location
+      contextual  like "short", but also display the source code
+                  snippet corresponding to the location of the error
+    The default setting is 'contextual'.
+  If the option is not specified, these setting can alternatively
+  be set through the OCAML_ERROR_STYLE environment variable.
+  -compact  Optimize code size rather than speed
+  -config  Print configuration values and exit
+  -config-var  Print the value of a configuration variable, a newline, and exit
+    (print nothing and exit with error value if the variable does not exist)
+  -dtypes  (deprecated) same as -annot
+  -for-pack <ident>  Generate code that can later be `packed' with
+     ocamlopt -pack -o <ident>.cmx
+  -g  Record debugging information for exception backtrace
+  -function-sections  Generate each function in a separate section if target supports it
+  -stop-after {parsing|typing|scheduling|emit} Stop after the given compilation pass.
+  -save-ir-after {scheduling} Save intermediate representation after the given compilation pass(may be specified more than once).
+  -i  Print inferred interface
+  -I <dir>  Add <dir> to the list of include directories
+  -impl <file>  Compile <file> as a .ml file
+  -inline <n>|<round>=<n>[,...]  Aggressiveness of inlining (default 1.25, higher numbers mean more aggressive)
+  -inline-toplevel <n>|<round>=<n>[,...]  Aggressiveness of inlining at toplevel (higher numbers mean more aggressive)
+  -inline-alloc-cost <n>|<round>=<n>[,...]  The cost of not removing an allocation during inlining (default 7, higher numbers more costly)
+  -inline-branch-cost <n>|<round>=<n>[,...]  The cost of not removing a conditional during inlining (default 5, higher numbers more costly)
+  -inline-call-cost <n>|<round>=<n>[,...]  The cost of not removing a call during inlining (default 5, higher numbers more costly)
+  -inline-prim-cost <n>|<round>=<n>[,...]  The cost of not removing a primitive during inlining (default 3, higher numbers more costly)
+  -inline-indirect-cost <n>|<round>=<n>[,...]  The cost of not removing an indirect call during inlining (default 4, higher numbers more costly)
+  -inline-lifting-benefit <n>|<round>=<n>[,...]  The benefit of lifting definitions to toplevel during inlining (default 1300, higher numbers more beneficial)
+  -inlining-report  Emit `.<round>.inlining' file(s) (one per round) showing the inliner's decisions
+  -insn-sched  Run the instruction scheduling pass (default)
+  -intf <file>  Compile <file> as a .mli file
+  -intf-suffix <string>  Suffix for interface files (default: .mli)
+  -keep-docs  Keep documentation strings in .cmi files
+  -no-keep-docs  Do not keep documentation strings in .cmi files (default)
+  -keep-locs  Keep locations in .cmi files (default)
+  -no-keep-locs  Do not keep locations in .cmi files
+  -labels  Use commuting label mode
+  -linkall  Link all modules, even unused ones
+  -inline-max-depth <n>|<round>=<n>[,...]  Maximum depth of search for inlining opportunities inside inlined functions (default 1)
+  -alias-deps  Do record dependencies for module aliases
+  -no-alias-deps  Do not record dependencies for module aliases
+  -linscan  Use the linear scan register allocator
+  -app-funct  Activate applicative functors
+  -no-app-funct  Deactivate applicative functors
+  -no-float-const-prop  Deactivate constant propagation for floating-point operations
+  -noassert  Do not compile assertion checks
+  -noautolink  Do not automatically link C libraries specified in .cmxa files
+  -nodynlink  Enable optimizations for code that will not be dynlinked
+  -no-insn-sched  Do not run the instruction scheduling pass
+  -nolabels  Ignore non-optional labels in types
+  -nostdlib  Do not add default directory to the list of include directories
+  -nopervasives  (undocumented)
+  -no-unbox-free-vars-of-closures  Do not unbox variables that will appear inside function closures
+  -no-unbox-specialised-args  Do not unbox arguments to which functions have been specialised
+  -o <file>  Set output file name to <file>
+  -O2  Apply increased optimization for speed
+  -O3  Apply aggressive optimization for speed (may significantly increase code size and compilation time)
+  -opaque  Does not generate cross-module optimization information
+     (reduces necessary recompilation on module change)
+  -open <module>  Opens the module <module> before typing
+  -output-obj  Output an object file instead of an executable
+  -output-complete-obj  Output an object file, including runtime, instead of an executable
+  -p  (no longer supported)
+  -pack  Package the given .cmx files into one .cmx
+  -plugin <plugin>  (no longer supported)
+  -pp <command>  Pipe sources through preprocessor <command>
+  -ppx <command>  Pipe abstract syntax trees through preprocessor <command>
+  -principal  Check principality of type inference
+  -no-principal  Do not check principality of type inference (default)
+  -rectypes  Allow arbitrary recursive types
+  -no-rectypes  Do not allow arbitrary recursive types (default)
+  -remove-unused-arguments  Remove unused function arguments
+  -rounds <n>  Repeat tree optimization and inlining phases this many times (default 1).  Rounds are numbered starting from zero.
+  -runtime-variant <str>  Use the <str> variant of the run-time system
+  -with-runtime Include the runtime system in the generated program (default)
+  -without-runtime Do not include the runtime system in the generated program.
+  -S  Keep intermediate assembly file
+  -safe-string  (was set when configuring the compiler)
+  -shared  Produce a dynlinkable plugin
+  -short-paths  Shorten paths in types
+  -strict-sequence  Left-hand part of a sequence must have type unit
+  -no-strict-sequence  Left-hand part of a sequence need not have type unit (default)
+  -strict-formats  Reject invalid formats accepted by legacy implementations
+     (Warning: Invalid formats may behave differently from
+      previous OCaml versions, and will become always-rejected
+      in future OCaml versions. You should always use this flag
+      to detect invalid formats so you can fix them.)
+  -no-strict-formats  Accept invalid formats accepted by legacy implementations (default)
+     (Warning: Invalid formats may behave differently from
+      previous OCaml versions, and will become always-rejected
+      in future OCaml versions. You should never use this flag
+      and instead fix invalid formats.)
+  -thread  (deprecated) same as -I +threads
+  -unbox-closures  Pass free variables via specialised arguments rather than closures
+  -unbox-closures-factor <n > 0>  Scale the size threshold above which unbox-closures will slow down indirect calls rather than duplicating a function (default 10)
+  -inline-max-unroll <n>|<round>=<n>[,...]  Unroll recursive functions at most this many times (default 0)
+  -unboxed-types  unannotated unboxable types will be unboxed
+  -no-unboxed-types  unannotated unboxable types will not be unboxed (default)
+  -unsafe  Do not compile bounds checking on array and string access
+  -unsafe-string  (option not available)
+  -v  Print compiler version and location of standard library and exit
+  -verbose  Print calls to external commands
+  -version  Print version and exit
+  --version  Print version and exit
+  -vnum  Print version number and exit
+  -w <list>  Enable or disable warnings according to <list>:
+        +<spec>   enable warnings in <spec>
+        -<spec>   disable warnings in <spec>
+        @<spec>   enable warnings in <spec> and treat them as errors
+     <spec> can be:
+        <num>             a single warning number
+        <num1>..<num2>    a range of consecutive warning numbers
+        <letter>          a predefined set
+     default setting is "+a-4-6-7-9-27-29-30-32..42-44-45-48-50-60-66-67-68"
+  -warn-error <list>  Enable or disable error status for warnings according
+     to <list>.  See option -w for the syntax of <list>.
+     Default setting is "-a+31"
+  -warn-help  Show description of warning numbers
+  -where  Print location of standard library and exit
+  - <file>  Treat <file> as a file name (even if it starts with `-')
+  -match-context-rows <n>  (advanced, see manual section 9.2.)
+  -dno-unique-ids  (undocumented)
+  -dunique-ids  (undocumented)
+  -dno-locations  (undocumented)
+  -dlocations  (undocumented)
+  -dsource  (undocumented)
+  -dparsetree  (undocumented)
+  -dtypedtree  (undocumented)
+  -drawlambda  (undocumented)
+  -dlambda  (undocumented)
+  -drawclambda  (undocumented)
+  -dclambda  (undocumented)
+  -dflambda  Print Flambda terms
+  -drawflambda  Print Flambda terms after closure conversion
+  -dflambda-invariants  Check Flambda invariants around each pass
+  -dflambda-no-invariants  Do not Check Flambda invariants around each pass
+  -dflambda-let <stamp>  Print when the given Flambda [Let] is created
+  -dflambda-verbose  Print Flambda terms including around each pass
+  -dcmm  (undocumented)
+  -dsel  (undocumented)
+  -dcombine  (undocumented)
+  -dcse  (undocumented)
+  -dlive  (undocumented)
+  -davail  Print register availability info when printing liveness
+  -drunavail  Run register availability pass (for testing only; needs -g)
+  -dspill  (undocumented)
+  -dsplit  (undocumented)
+  -dinterf  (undocumented)
+  -dprefer  (undocumented)
+  -dalloc  (undocumented)
+  -dreload  (undocumented)
+  -dscheduling  (undocumented)
+  -dlinear  (undocumented)
+  -dinterval  (undocumented)
+  -dstartup  (undocumented)
+  -dtimings  Print timings information for each pass
+  -dprofile  Print performance information for each pass
+    The columns are: time alloc top-heap absolute-top-heap.
+  -dump-into-file  dump output like -dlambda into <target>.dump
+  -dump-pass  Record transformations performed by these passes:
+     unbox-closures unbox-specialised-args unbox-free-vars-of-closures
+     remove-free-vars-equal-to-args remove-unused-arguments unused-arguments
+  -args <file> Read additional newline-terminated command line arguments
+      from <file>
+  -args0 <file> Read additional null character terminated command line arguments
+from <file>
+  -depend <options> Compute dependencies (use 'ocamlopt -depend -help' for details)
+  -help  Display this list of options
+  --help  Display this list of options
+make[1]: *** [OCamlMakefile:1076: pdfutil.cmx] Error 2
+make[1]: Leaving directory '/home/runner/work/satyrographos-repo-bin/satyrographos-repo-bin/_opam/.opam-switch/build/camlpdf.2.2.2+satysfi'
+make: *** [OCamlMakefile:801: native-code-library] Error 2
